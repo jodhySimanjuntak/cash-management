@@ -1,0 +1,83 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?link rel="stylesheet" href="./css/main_sidemenu.css"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+	<div width="100%" height="100%" vflex="true"
+		apply="org.zkoss.bind.BindComposer">
+		<listbox sclass="hc-sidemenu-listing" id="fnlist"
+			apply="org.zkoss.bind.BindComposer" style="overflow: hidden !important; border:none"
+			viewModel="@id('vm') @init('com.mantabs.collection.master.area_assignment.viewmodel.SidebarVmd')"
+			model="@load(vm.sidebarPage)">
+			<template name="model">
+				<listitem sclass="hc-sidemenu-list">
+					<listcell >
+						<div sclass="hc-sidemenu-listwrapper"
+							tooltiptext="@load(each.label)">
+							<!-- <div sclass="hc-sidemenu-icon">
+								<image src="@load(each.iconUri)" />
+							</div> -->
+							<label value="@load(each.label)"
+								sclass="hc-sidemenu-name labelMenu" />
+						</div>
+						<listbox sclass="hc-sidemenuchild-listing" style="overflow: hidden !important; border: none"
+							model="@load(each.listSubMenu)">
+							<template name="model" var="sub">
+								<listitem
+									sclass="hc-sidemenuchild-list">
+									<listcell
+										onClick="@command('cek',item=each) @global-command('onNavigateSub', page=sub)" >
+										<div
+											tooltiptext="@load(sub.label)"
+											sclass="hc-sidemenuchild-listwrapper">
+											<!-- <div
+												sclass="hc-sidemenuchild-icon">
+												<image
+													src="@load(sub.iconUri)" />
+											</div> -->
+											<label
+												value="@load(sub.label)"
+												sclass="hc-sidemenuchild-name labelMenu" />
+										</div>
+									</listcell>
+								</listitem>
+							</template>
+						</listbox>
+					</listcell>
+				</listitem>
+			</template>
+		</listbox>
+		
+		<div sclass="hc-sidemenu-btnwrapper">
+		<div class="hc-data-togglebtn">
+			<label sclass="icon-bar"></label>
+			<label sclass="icon-bar"></label>
+			<label sclass="icon-bar"></label>
+		</div>
+	</div>
+	</div>
+	
+
+	<script>
+		$(document).ready(function(){
+
+		setTimeout(function(){ $('.hc-data-togglebtn').click(function(){
+		$(this).parent().parent().toggleClass('sidebar-open');
+		$(this).parent().parent().parent().toggleClass('sidebar-show');
+		}); $('.hc-sidemenu-listwrapper').click(function(){
+		$(this).parent().parent().parent().toggleClass('sidemenuchild-open');
+		});
+
+		if( $('.hc-sidemenuchild-list').length > 0 ) {
+		$('.hc-sidemenuchild-list').parent().parent().parent().parent().parent().addClass('sidemenuchild-arrow');
+		} }, 1000);
+
+
+
+		});
+
+
+
+	</script>
+
+</zk>

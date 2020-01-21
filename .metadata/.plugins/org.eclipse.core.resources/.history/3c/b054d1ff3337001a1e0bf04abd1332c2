@@ -1,0 +1,60 @@
+<?page title="PT MANDALA MULTIFINANCE" contentType="text/html;charset=UTF-8" automaticTimeout="false"?>
+<?init class="com.mantabs.collection.master.area_assignment.viewmodel.LoginCheckerVmd"?>
+<!-- <?link rel="stylesheet" type="text/css" href="/css/login-style.css" ?> -->
+<!-- <?link rel="stylesheet" href="/css/main-style.css"?> -->
+<?link rel="icon" href="/images/logo_mandala.png" type="image/x-icon" ?>
+
+<zk xmlns:h="html">
+	<div self="@define(content)" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('com.mantabs.collection.master.area_assignment.viewmodel.LoginVmd')"
+		style="">
+
+
+		<div sclass="login-content-wrapper">
+			<div sclass="login-logo-wrapper">
+				<image src="/images/logo_mandala.png"
+					sclass="login-logo-pln">
+				</image>
+			</div>
+
+			<div sclass="login-form">
+
+				<div sclass="login-form-wrapper">
+					<div sclass="form-item">
+						<textbox value="@bind(vm.username)"
+							onOK="@command('login')" placeholder="Username"
+							style="text-align:left;text-transform:none;" />
+					</div>
+					<div sclass="form-item">
+						<textbox id="pwd" value="@bind(vm.password)"
+							style="text-align:left;text-transform:none;" type="password"
+							onOK="@command('login')" placeholder="Password" />
+					</div>
+					<!-- <div sclass="form-item login-showpwd">
+						<checkbox sclass="login-showpwd-input"
+							onCheck='pwd.setType(self.isChecked() ? "text" : "password")' />
+						<label value="Show Password"
+							sclass="login-show-pwd" />
+					</div> -->
+					<div sclass="form-item btn-login-wrapper">
+						<button class="btn-login general-btn"
+							onClick="@command('login')">
+							MASUK
+						</button>
+					</div>
+					<!-- <div sclass="form-item login-forgot-wrapper">
+						<a sclass="right-hyperlink">LUPA PASSWORD?</a>
+						</div> -->
+				</div>
+			</div>
+
+		</div>
+
+		<div sclass="login-footer">
+			<label sclass="login-footer-copyright">
+				COPYRIGHT &#169; 2019 BY PT MANDALA MULTIFINANCE
+			</label>
+		</div>
+		<!-- <include src="/layout/msgFree.zul" /> -->
+	</div>
+</zk>

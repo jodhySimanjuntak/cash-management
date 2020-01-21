@@ -1,0 +1,5 @@
+package com.mantabs.collection.master.area_assignment.dto;
+
+public class WilayahDto {
+
+}

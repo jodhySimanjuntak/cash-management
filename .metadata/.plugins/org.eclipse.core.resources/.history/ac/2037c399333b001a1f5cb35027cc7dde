@@ -1,0 +1,38 @@
+# use dev for run/debug as springboot app
+# use qa for war deployment on our QA development server (tomcat)
+# use prod for war deployment on client's UAT server or Production server
+# client states may be extends into uat and prod base on later development stages
+spring.profiles.active=uat
+
+#server config
+server.port=8098
+mfincore.homepage=/pages/login
+mfincore.authserver=http://localhost:8090/login
+mfincore.cookieName=JWT-TOKEN
+#jwt.secret=mf1ncoreP4ssK3y2019
+jwt.secret=signingKey
+
+
+#this will let ZK render zul from webapp folder instead of resources folder
+zk.springboot-packaging=war
+
+#spring
+spring.jpa.properties.hibernate.globally_quoted_identifiers=true
+spring.jpa.database-platform=org.hibernate.dialect.Oracle10gDialect
+spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+#End Point Services
+wilayah.service=getWilayah
+regional.service=getRegional
+centro.service=getCentro
+cabang.service=getCabang
+portofolio.service=getPortofolio
+kategoriProduk.service=getKategoriProduk
+
+jenisProduk.service=getJenisProduk
+subProduk.service=getSubProduk
+
+provinsi.service=getProvinsi
+kota.service=getKota
+kecamatan.service=getKecamatan
+kelurahan.service=getKelurahan

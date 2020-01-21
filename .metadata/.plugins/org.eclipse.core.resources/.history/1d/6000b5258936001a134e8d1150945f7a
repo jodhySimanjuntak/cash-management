@@ -1,0 +1,24 @@
+<window visible="@load(vm.flagMsgDelete)" mode="modal" position="center,center" style="width: 320px;"
+	closable="true">
+	<div style="width: 320px;
+	padding: 20px 30px;">
+		<div
+			style="display: flex;
+	justify-content: center;
+	padding-bottom: 20px;">
+			<button iconSclass="z-icon-check" 
+			style="width:70px;height:70px;background:#2baabc;border:none; 
+			color: white; font-size: 42px;border-radius: 50%; cursor: default;"/>
+		</div>
+		<div sclass="warn-text">
+			<label value="Apakah anda yakin akan menghapus data ini? " />
+		</div>
+		<div sclass="btn-wrapper d-flex space-between ai-center"
+			style="margin-left: 20%;margin-right:20%">
+			<button label="YA" onClick="@command('OK')"
+				sclass="submitmodal-btn" style="width:60%;margin:2px;" />
+			<button label="BATAL" onClick="@command('BATAL')"
+				sclass="cancelmodal-btn" style="width:60%;margin:2px;"/>	
+		</div>
+	</div>
+</window>

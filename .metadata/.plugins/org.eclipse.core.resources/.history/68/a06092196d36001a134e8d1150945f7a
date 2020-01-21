@@ -1,0 +1,116 @@
+<zk>
+	<!-- <borderlayout hflex="1" vflex="1">
+		<north style="background-color: ghostwhite; height: 50px;"
+			border="none" sclass="head">
+			<include src="/pages/banner.zul"></include>
+		</north> 
+		<west maxsize="500" size="20%" flex="true" border="0" minsize="150"
+					splittable="true" collapsible="true" autoscroll="true"
+			style="background-color: ghostwhite; margin-top: 50px">
+			<include src="/pages/sidebar.zul" width="auto"
+				sclass="hc-sidemenu-wrapper">
+			</include>
+		</west>
+		<center id="mainContent" autoscroll="true"
+			style="margin-left:5px; border:none;"
+			self="@insert(mainContent)"
+				sclass="hc-content-wrapper">
+			
+		</center>
+
+	</borderlayout> -->
+	
+	<borderlayout width="100%" viewModel="@id('vm') @init('com.mantabs.mainmenu.viewmodel.MainVM')">
+		<north size="100%" border="none" height="85px">
+			<borderlayout>
+				<west size="50%"  border="none">
+					<div>
+						<image src="/icon/logo-mandala.jpg" />
+					</div>
+				</west>
+				<center border="none">
+					<separator/>
+				</center>
+				<east size="25%"  border="none">
+					<div align="right">
+						<hbox>
+							<vbox align="center">
+								<separator/>
+								<combobox name="moduleName" readonly="true" autodrop="true" model="@load(vm.moduleList)" selectedItem="@bind(vm.selectedModule)" width="100px">
+									<template name="model" var="pm">
+										<comboitem value="@bind(pm.value)" label="@bind(pm.label)" />
+									</template>
+								</combobox>
+								<button iconSclass="box-open" label="Open" onClick="@command('changeModule')" width="100px"/>
+							</vbox>
+							<separator width="100px"/>
+							<vbox align="center">
+								<separator/>
+								<image src="/icon/user.png" height="50px"/>
+							</vbox>
+							<vbox align="center">
+								<separator/>
+								<label value="@load(vm.username)" style="font-weight: bold;"/>
+								<button iconSclass="z-icon-sign-out" label="Logout" onClick="@command('logout')"/>
+							</vbox>
+						</hbox>
+					</div>
+				</east>
+			</borderlayout>
+		</north>
+		<west size="20%" flex="true" maxsize="300" splittable="true"
+			  collapsible="true" autoscroll="true">
+			<div>
+				<separator/>
+				<hbox align="center">
+					<separator/>
+					<separator/>
+					<label style="font-size: 12px" value="Module: "/>
+					<label value="@load(vm.activePage)" sclass="labelModuleName"/>
+				</hbox>
+				<navbar orient="vertical" children="@load(vm.menuItems)" >
+					<template name="children" var="menuGroup">
+						<nav label="@load(menuGroup.name)"  iconSclass="z-icon-th-list" children="@load(menuGroup.children) @template('navitem')" />
+					</template>
+					<template name="navitem" var="mnuItem">
+						<navitem label="${mnuItem.name}" onClick="@command('navigate',page=mnuItem)"/>
+					</template>
+				</navbar>
+			</div>
+		</west>
+		<center autoscroll="true">
+				<iframe id="iframe"  src="@load(vm.selectedMenuItem.uri)" width="100%" height="100%"/>
+		</center>
+		<south height="50px" border="none">
+            <label style="font-size:10px">Copyright Mandala Finances</label>
+        </south>
+	</borderlayout>
+
+
+</zk>
+
+<!-- <zk>
+	<borderlayout hflex="1" vflex="1">
+		<north style="background-color: ghostwhite; height: 50px;"
+			border="none" sclass="head">
+			<include src="/pages/banner.zul"></include>
+		</north>
+		<center border="0">
+			<borderlayout>
+				<west maxsize="600" size="19.75%" flex="true" border="0"
+					splittable="true">
+					<include src="/pages/sidebar.zul"
+						sclass="hc-sidemenu-wrapper">
+					</include>
+				</west>
+				<center>
+					<div self="@insert(mainContent)"
+						sclass="hc-content-wrapper">
+					</div>
+				</center>
+			</borderlayout>
+		</center>
+
+	</borderlayout>
+
+</zk> -->

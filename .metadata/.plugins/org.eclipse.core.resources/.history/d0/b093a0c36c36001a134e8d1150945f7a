@@ -1,0 +1,95 @@
+package com.mantabs.mainmenu.service;
+
+import com.mantabs.mainmenu.entity.MasterMenu;
+import com.mantabs.mainmenu.model.MenuItem;
+import com.mantabs.mainmenu.repository.MasterMenuRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Service
+@Transactional
+public class MasterMenuService {
+    private long lastCount=0;
+    private int lastTotalPages=0;
+    
+    @PersistenceContext
+    EntityManager entityManager;
+
+
+    @Autowired
+    private MasterMenuRepository menuRepository;
+
+    private List<MenuItem> menus;
+
+    public List<MenuItem> listMenu(String menuType) {
+        menus=new ArrayList<>();
+        List<MasterMenu> lstMasterMenu=(menuType.equalsIgnoreCase("collection"))?menuRepository.findActiveCollectionMenuOrderByOrderNo():menuRepository.findActiveCollateralMenuOrderByOrderNo();
+        for (MasterMenu mnuItem : lstMasterMenu) {
+            addPage(mnuItem);
+        }
+        return menus;
+    }
+
+
+    public List<MasterMenu> listPageableMenu(int activePage, int pageSize) {
+        Pageable paging = PageRequest.of(activePage,pageSize);
+        Page<MasterMenu> pagedResult = menuRepository.findAllByOrderByOrderNoAsc(paging);
+        if(pagedResult.hasContent()) {
+            lastCount=pagedResult.getTotalElements();
+            lastTotalPages=pagedResult.getTotalPages();
+            return pagedResult.getContent();
+        } else {
+            lastCount=0;
+            lastTotalPages=0;
+            return new ArrayList<>();
+        }
+    }
+
+
+    private void  addPage(MasterMenu menuData) {
+        String parentPageName=menuData.getParentPageName();
+        String pageTitle=menuData.getPageTitle();
+        String moduleName=menuData.getModuleName();
+        String pageName=menuData.getPageName();
+        String uri=menuData.getUri();
+        if (uri==null) {
+            uri="/notready";
+        } else {
+            pageTitle+=" [READY]";
+        }
+
+
+        if (parentPageName==null || parentPageName.isEmpty()) {
+            MenuItem mainMenu = new MenuItem(pageTitle,moduleName,pageName,uri);
+            menus.add(mainMenu);
+        } else {
+            MenuItem mainMenu = menus.stream()
+                    .filter(mainMenuItem -> parentPageName.equals(mainMenuItem.getPageId()))
+                    .findAny()
+                    .orElse(null);
+            MenuItem subMenu=new MenuItem(pageTitle,moduleName,pageName,uri);
+            mainMenu.addChild(subMenu);
+        }
+    }
+
+
+    public long getCount() {
+        return lastCount;
+    }
+
+
+    public int getTotalPages() {
+        return lastTotalPages;
+    }
+
+}

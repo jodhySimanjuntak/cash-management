@@ -1,0 +1,35 @@
+<window visible="@load(vm.flagMsgInvNumber)" mode="modal" position="center,center" style="width: 320px;"
+	closable="true">
+	<div style="width: 320px;
+	padding: 20px 30px;">
+		<div
+			style="display: flex;
+	justify-content: center;
+	padding-bottom: 20px;">
+			<button iconSclass="z-icon-times"
+			style="width:70px;height:70px;background:#2baabc;border:none; 
+			color: white; font-size: 42px;border-radius: 50%; cursor: default;"/>
+		</div>
+		<div
+			style="padding-bottom: 20px;
+	text-align: center;
+	color: #2baabc;
+	font-weight: bold;">
+			<label value="Invalid Number" />
+		</div>
+		<div sclass="btn-wrapper d-flex space-between ai-center"
+			style="margin-left: 35%;">
+			<button label="OK" onClick="@command('OK')"
+				style="border-radius: 5px;
+	background: #0000FF;
+	color: white;
+	font-family: 'myriadsemibold';
+	padding: 10px ;
+	width: 65px;
+	border: none;
+	font-size: 14px;
+	transition: 0.25s ease-out;
+	text-shadow: none;" />
+		</div>
+	</div>
+</window>

@@ -1,0 +1,14 @@
+package com.mantabs.entity.master;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "MMF_MST_REGIONAL")
+public class Regional implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
+}

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.mantabs</groupId>
+	<artifactId>mantabs-project</artifactId>
+	<packaging>pom</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>mantabs-project</name>
+	
+	<!--All modules in MFINCORE should be listed here-->
+	<!--To list a module here, use the artifactId of the module which is the same with its name property-->
+	<modules>
+		<module>common</module>
+		<module>common-db</module>
+		<module>cash-manajemen</module>
+         </modules>
+    
+    <parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.0.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
+	<repositories>
+		<repository>
+			<id>ZK CE</id>
+			<name>ZK CE Repository</name>
+			<url>https://mavensync.zkoss.org/maven2</url>
+		</repository>
+		<repository>
+			<id>ZK EVAL</id>
+			<name>ZK Evaluation Repository</name>
+			<url>https://mavensync.zkoss.org/eval</url>
+		</repository>
+	</repositories>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<zkspringboot.version>1.0.4</zkspringboot.version>
+		<springboot.version>2.1.0.RELEASE</springboot.version>
+		<zk.version>8.6.0.1-Eval</zk.version>
+		<property name="hibernate.globally_quoted_identifiers"
+				  value="true" />
+	</properties>
+
+	<dependencies>
+		<!-- ZK Spring -->
+		<dependency>
+			<groupId>org.zkoss.zkspringboot</groupId>
+			<artifactId>zkspringboot-starter</artifactId>
+			<type>pom</type>
+			<version>${zkspringboot.version}</version>
+			<!-- Deploy Server -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions> 
+
+			<!-- Local -->
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<artifactId>hibernate-validator</artifactId> -->
+<!-- 					<groupId>org.hibernate.validator</groupId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions>  -->
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<!-- spring security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<version>2.1.0.RELEASE</version>
+		</dependency>
+
+		<!-- add ZK EE - optional -->
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zkmax</artifactId>
+			<version>${zk.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-jdk14</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zkbind</artifactId>
+			<version>${zk.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zuti</artifactId>
+			<version>${zk.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zkplus</artifactId>
+			<version>${zk.version}</version>
+		</dependency>
+
+
+		<!-- ZK Theme -->
+		<dependency>
+			<groupId>org.zkoss.theme</groupId>
+			<artifactId>breeze</artifactId>
+			<version>${zk.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.zkoss.theme</groupId>
+			<artifactId>iceblue_c</artifactId>
+			<version>${zk.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0</version>
+		</dependency>
+
+		<!-- Query DSL -->
+		<dependency>
+			<groupId>com.querydsl</groupId>
+			<artifactId>querydsl-apt</artifactId>
+			<version>4.1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.querydsl</groupId>
+			<artifactId>querydsl-jpa</artifactId>
+			<version>4.1.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>2.3.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.7</version>
+		</dependency>
+		
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!--Plugin for query-dsl -->
+			<plugin>
+				<groupId>com.mysema.maven</groupId>
+				<artifactId>apt-maven-plugin</artifactId>
+				<version>1.1.3</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/generated-sources/java</outputDirectory>
+							<processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

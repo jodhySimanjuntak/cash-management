@@ -1,0 +1,60 @@
+package com.mantabs.entity.master;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "MMF_MST_CABANG")
+public class Cabang {
+
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@Column(name = "ID_CABANG")
+	private String idCabang;
+	
+	@Column(name = "NAMA_CABANG")
+	private String namaCabang;
+	
+	@Column(name = "KELAS_CABANG")
+	private String kelasCabang;
+	
+	@Column(name = "ALAMAT")
+	private String alamat;
+	
+	@Column(name = "RT")
+	private String rt;
+	
+	@Column(name = "RW")
+	private String rw;
+	
+	@Column(name = "KODE_AREA_TELP1")
+	private String kodeAreaTelp1;
+	
+	@Column(name = "NO_TELP1")
+	private String noTelp1;
+	
+	@Column(name = "KODE_AREA_TELP2")
+	private String kodeAreaTelp2;
+	
+	@Column(name = "NO_TELP2")
+	private String noTelp2;
+	
+	@Column(name = "KODE_AREA_TELP3")
+	private String kodeAreaTelp3;
+	
+	@Column(name = "NO_TELP3")
+	private String noTelp3;
+	
+	@Column(name = "KODE_AREA_FAX")
+	private String kodeAreaFax;
+	
+	@Column(name = "NO_FAX")
+	private String noFax;
+	
+	
+	
+
+}

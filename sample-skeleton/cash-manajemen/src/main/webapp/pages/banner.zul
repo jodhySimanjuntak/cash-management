@@ -1,0 +1,124 @@
+<zk>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+	</script>
+	<!-- <script type="text/javascript">
+		setInterval(function() { 
+		jq.ajax({ 
+		type : 'GET', 
+		url : 'notif.zul', 
+		dataType : 'html', 
+		data : {'date' : ''}, 
+		success :
+		function(data){ 
+		jq('$not').html(data);
+		//alert('sukses : '+data); 
+		}, 
+		error :
+		function(data){ 
+		alert('error : '+data); 
+		} 
+		}); 
+		}, 5 * 1000); 
+		</script> -->
+		<script type="text/javascript">
+			setInterval(function() { 
+				//alert('notif : ');
+				var test = '$jml()';
+				//alert('Notif : ' +test);
+			}, 5 * 1000); 
+		</script>
+	<?link rel="stylesheet" href="./css/main_header.css"?>
+	<div sclass="header" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('com.mantabs.collection.master.area_assignment.viewmodel.BannerVmd')">
+		<div sclass="navbar" style="padding: 0px !important;">
+			<div sclass="navbar-header">
+				<div sclass="navbar-brand">
+					<image style="margin-bottom: 5px;" width="100px" height="39px"  src="/images/logo_mandala.png"></image>
+				</div>
+				<div sclass="navbar-unit">
+					<!-- <label>Business Unit</label> -->
+					<!-- <div sclass="navbar-unit-dropdown">
+						<button sclass="navbar-unit-btn"
+						label="Kantor Pusat" iconSclass="z-icon-caret-down"
+						dir="reverse">
+						</button>
+						</div> -->
+				</div>
+			</div>
+			<div sclass="navbar-menu-wrapper">
+				<!-- <div sclass="hc-notif" visible="@load(vm.flagAdm)"
+					tooltiptext="@load(vm.notifTransfer)" onClick="@command('toTransfer') @global-command('refresh')">
+					<image width="20px"
+						src="/images/ico_transfer_data.png" height="20px">
+					</image>
+					<div id="tra" sclass="badge" visible="@load(vm.flagNotifT)">
+						<label value="@load(vm.jmlNotifT)"/>
+					</div>
+
+				</div> -->
+				 
+				<!-- <div sclass="navbar-user-wrapper">
+					<div sclass="image-cropper"
+						onClick="@command('profil') @global-command('refresh')">
+						<image sclass="profile-pic" width="40px"
+							height="40px"
+							style="flex-grow: 0;flex-shrink: 0;flex-basis: 40px;object-fit: contain;
+							background-position: center;background-size: cover;margin-right: 10px;
+							border-radius: 50%;cursor: pointer;"
+							content="@load(vm.userDto.photo) @converter('id.co.indocyber.spFactoryCms.tools.ImageToZkImageConverter')">
+						</image>
+					</div>
+					<div sclass="navbar-user-info"
+						onClick="@command('profil')">
+						<label sclass="navbar-user-username"
+							style="cursor: pointer;" value="@load(vm.userDto.fullname)">
+						</label>
+						<label sclass="navbar-user-role"
+							style="cursor: pointer;" value="@load(vm.name)">
+						</label>
+					</div>
+				</div> -->
+				<!-- <div sclass="navbar-menu-logout" 
+					tooltiptext="Notifikasi" onClick="@command('') @global-command('refresh')">
+					<image width="20px"
+						src="/images/ico_notif" height="20px">
+					</image>
+					<div id="not" sclass="badge" visible="@load(vm.flagNotifP)">
+						<label value="@load(vm.jmlNotifP)"/>
+					</div>
+				</div>  -->
+				
+				<div sclass="navbar-menu-logout">
+					<hbox>
+						<!-- <div sclass="hc-notif">
+						<image width="30px" style="margin-top:6px"
+							src="/images/ico_notif.png" height="30px">
+						</image>
+						<div id="tra" sclass="badge" >
+							<label style="color:red; margin-left:-28px; 
+							font-size:16px; font-weight:bold; 
+							background-color:white; border-radius:50%; padding: 2px 6px;" value="5"/>
+						</div>
+						</div> -->
+						
+						<vbox style="margin-right:15px; margin-bottom:12px">
+							<label value="Welcome, " ></label>
+							<label style="font-weight:bold; font-size:16px" value="@load(vm.userLogin)" ></label>
+					
+					</vbox>
+					
+						<button type="button" onClick="@command('logout')" 
+						style="margin-bottom:10px; margin-top:4px; height:30px; width:46px"
+						iconSclass="z-icon-power-off">
+						</button>
+					</hbox>
+					
+				</div>
+				<!-- <div sclass="navbar-pln-logo">
+					<image src="/images/ico_notif.png" />
+				</div> -->
+			</div>
+		</div>
+	</div>
+</zk>

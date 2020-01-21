@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common-db/common-db.iml" filepath="$PROJECT_DIR$/common-db/common-db.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mantabs-project.iml" filepath="$PROJECT_DIR$/mantabs-project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/master-area-assignment/master-area-assignment.iml" filepath="$PROJECT_DIR$/master-area-assignment/master-area-assignment.iml" />
+    </modules>
+  </component>
+</project>

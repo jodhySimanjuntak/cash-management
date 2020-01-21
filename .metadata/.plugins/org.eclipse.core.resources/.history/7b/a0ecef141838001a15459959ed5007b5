@@ -1,0 +1,850 @@
+<zk>
+	<style dynamic="true">
+		.GridLayoutNoBorder tr.z-row td.z-row-inner, tr.z-row .zcell,
+		div.zgrid, .z-grid { border: none; zoom: 1; overflow: hidden;
+		background: white; border-top: none; border-left: none;
+		border-right: none; border-bottom:none; } .windowStyle
+		.z-window-embedded-cnt, .z-window-embedded-body,
+		.z-window-overlapped-body, .z-window-popup-body,
+		.z-window-highlighted-body, .z-window-modal-body{ }
+
+		.GroupBoxNew .z-groupbox-content { font-size: 12px;
+		padding-left: 5px; overflow-x: scroll; padding-right: 5px;
+		padding-top: 5px}
+
+	</style>
+	<window apply="org.zkoss.bind.BindComposer"
+		title="Master Group Level Approval" border="normal"
+		contentStyle="overflow:auto;"
+		viewModel="@id('vm') @init('com.mantabs.collection.master.area_assignment.viewmodel.MasterApprovalVM') 
+		 @load(vm.dto) @save(vm.dto, before='saveGroupApproval')">
+		<div visible="@load(vm.groupApprovalWindow)">
+			<vlayout hflex="1">
+				<groupbox style="margin-bottom: 20px; margin-right:5px"
+					sclass="GroupBoxNew" height="auto">
+					<caption label="Filter Pencarian"></caption>
+
+					<grid style="margin-top: 10px; margin-bottom:10px"
+						sclass="GridLayoutNoBorder">
+						<columns>
+							<column width="120px" />
+							<column width="400px" />
+							<column width="100px" />
+							<column width="300px" />
+						</columns>
+						<rows>
+
+							<row style="border-bottom:transparent">
+								<label value="Kategori Biaya" />
+								<combobox width="225px"
+									onChange="@command('ubahKategoriBiaya')"
+									model="@load(vm.listComboKategoriBiaya)"
+									selectedItem="@bind(vm.selectedComboKategoriBiaya)"
+									readonly="true">
+									<template name="model" var="data">
+										<comboitem
+											label="@load(data.kategoriBiaya)"
+											value="@load(data.kodeKategoriBiaya)" />
+									</template>
+								</combobox>
+								<label value="Wilayah" />
+								<bandbox id="bdWilayah"
+									onChange="@command('ubahWilayah')" mold="rounded"
+									autodrop="true" constraint="no empty : data harus diisi"
+									value="@bind(vm.selectedComboWilayah.namaWilayah)"
+									style="width:200px" 
+									readonly="true">
+									<bandpopup style="overflow-x:hidden"
+										width="257px" height="auto">
+										<textbox
+											value="@bind(vm.wilayah)" placeholder="Wilayah"
+											style="text-transform: none;"
+											onChange="@command('ubahWilayah')" width="250px"
+											instant="true" />
+
+										<listbox width="250px"
+											mold="paging" pageSize="5" pagingPosition="bottom"
+											model="@load(vm.listComboWilayah)"
+											selectedItem="@bind(vm.selectedComboWilayah)"
+											onSelect="bdWilayah.close();"
+											emptyMessage="Data Tidak Tersedia">
+											<template name="model">
+												<listitem>
+													<listcell
+														onClick="@command('ubahWilayah')"
+														label="@load(each.namaWilayah)" />
+												</listitem>
+											</template>
+										</listbox>
+									</bandpopup>
+								</bandbox>
+
+							</row>
+							<row style="border-bottom:transparent">
+								<label value="Sub Kategori" />
+								<combobox width="225px"
+									onChange="@command('ubahSubKategori')"
+									model="@load(vm.listComboSubKategori)"
+									selectedItem="@bind(vm.selectedComboSubKategori)"
+									disabled="@load(vm.selectedComboKategoriBiaya.kodeKategoriBiaya eq null ? 'true': 'false')"
+									readonly="true">
+									<template name="model" var="data">
+										<comboitem
+											label="@load(data.subKategori)"
+											value="@load(data.kodeSubKategori)" />
+									</template>
+								</combobox>
+								<label value="Regional" />
+								<bandbox id="bdRegional" mold="rounded" 
+									autodrop="true" onChange="@command('ubahRegional')"
+									disabled="@load(vm.selectedComboWilayah.idWilayah eq null ? 'true' : 'false')"
+									value="@bind(vm.selectedComboRegional.namaRegional)"
+									style="width:200px" constraint="no empty : data harus diisi"
+									readonly="true">
+									<bandpopup style="overflow-x:hidden"
+										width="257px" height="auto">
+										<textbox
+											value="@bind(vm.regional)" placeholder="Regional"
+											style="text-transform: none;"
+											onChange="@command('ubahRegional')" width="250px"
+											instant="true" />
+
+										<listbox width="250px"
+											mold="paging" pageSize="5" pagingPosition="bottom"
+											model="@load(vm.listComboRegional)"
+											selectedItem="@bind(vm.selectedComboRegional)"
+											onSelect="bdRegional.close();"
+											emptyMessage="Data Tidak Tersedia">
+											<template name="model">
+												<listitem>
+													<listcell
+														onClick="@command('ubahRegional')"
+														label="@load(each.namaRegional)" />
+												</listitem>
+											</template>
+										</listbox>
+									</bandpopup>
+								</bandbox>
+
+							</row>
+							<row style="border-bottom:transparent">
+								<label value="Jenis Biaya" />
+								<combobox width="225px"
+									model="@load(vm.listComboJenisBiaya)"
+									disabled="@load(vm.selectedComboSubKategori.kodeSubKategori eq null ? 'true': 'false')"
+									selectedItem="@bind(vm.selectedComboJenisBiaya)"
+									readonly="true">
+									<template name="model" var="data">
+										<comboitem
+											label="@load(data.jenisBiaya)"
+											value="@load(data.kodeJenisBiaya)" />
+									</template>
+								</combobox>
+								<label value="Cabang" />
+								<bandbox id="bdCabang" mold="rounded"
+									autodrop="true"
+									disabled="@load(vm.selectedComboRegional.idRegional eq null ? 'true' : 'false')"
+									value="@bind(vm.selectedComboCabang.namaCabang)"
+									style="width:200px" constraint="no empty : data harus diisi"
+									readonly="true">
+									<bandpopup style="overflow-x:hidden"
+										width="257px" height="auto">
+										<textbox
+											value="@bind(vm.cabang)" placeholder="Cabang"
+											style="text-transform: none;"
+											onChange="@command('ubahCabang')" width="250px"
+											instant="true" />
+
+										<listbox width="250px"
+											mold="paging" pageSize="5" pagingPosition="bottom"
+											model="@load(vm.listComboCabang)"
+											selectedItem="@bind(vm.selectedComboCabang)"
+											onSelect="bdCabang.close();"
+											emptyMessage="Data Tidak Tersedia">
+											<template name="model">
+												<listitem>
+													<listcell
+														onClick="bdCabang.close()"
+														label="@load(each.namaCabang)" />
+												</listitem>
+											</template>
+										</listbox>
+									</bandpopup>
+								</bandbox>
+
+							</row>
+
+							<row style="border-bottom:transparent">
+								<label value="Group Approval" />
+								<textbox width="225px"
+									style="text-transform:uppercase;"
+									value="@bind(vm.groupApproval)" />
+
+							</row>
+							<row style="border-bottom:transparent">
+								<label value="Status" />
+								<combobox width="225px"
+									model="@load(vm.listComboStatusHdr)"
+									selectedItem="@bind(vm.selectedComboStatus)" readonly="true">
+									<template name="model" var="data">
+										<comboitem
+											label="@load(data.namaParam)" value="@load(data.idParam)" />
+									</template>
+								</combobox>
+
+							</row>
+							<row style="border-bottom:transparent">
+								<label value="Inisiator" />
+								<combobox width="225px"
+									model="@load(vm.listComboInisiator)"
+									selectedItem="@bind(vm.selectedComboInisiator)"
+									readonly="true">
+									<template name="model" var="data">
+										<comboitem
+											label="@load(data.namaParam)" value="@load(data.idParam)" />
+									</template>
+								</combobox>
+
+							</row>
+
+						</rows>
+					</grid>
+				</groupbox>
+				<separator spacing="10px" />
+
+				<grid sclass="GridLayoutNoBorder">
+					<columns>
+						<column width="150px" />
+						<column width="450px" />
+					</columns>
+					<rows>
+						<row style="border-bottom:transparent">
+							<label />
+							<hlayout>
+								<button iconSclass="z-icon-filter"
+									onClick="@command('filterGA')" autodisable="self" />
+								<button iconSclass="z-icon-refresh"
+									onClick="@command('refresGridGroupApproval')"
+									autodisable="self" />
+							</hlayout>
+						</row>
+
+					</rows>
+				</grid>
+
+				<groupbox style="margin-bottom: 20px; margin-right:5px"
+					sclass="GroupBoxNew" height="auto">
+					<caption label="Data Master Group Approval" />
+
+					<button iconSclass="z-icon-plus"
+						onClick="@command('addGroupApproval')" />
+
+					<separator style="height:10px !important" />
+
+					<listbox model="@load(vm.listHeaderGroupApproval)"
+						width="fit-content" sizedByContent="true"
+						selectedItem="@bind(vm.selectedHeaderGroupApproval)"
+						pagingPosition="bottom">
+						<listhead sizable="true">
+							<listheader align="center"
+								sort="auto(kodeKategoriBiaya)">
+								Group Approval
+							</listheader>
+							<listheader align="center"
+								sort="auto(kategoriBiaya)">
+								Kategori Biaya
+							</listheader>
+							<listheader align="center"
+								sort="auto(kategoriBiaya)">
+								Sub Kategori
+							</listheader>
+							<listheader align="center"
+								sort="auto(kategoriBiaya)">
+								Jenis Biaya
+							</listheader>
+							<listheader align="center"
+								sort="auto(kategoriBiaya)">
+								Tanggal Buat
+							</listheader>
+							<listheader align="center"
+								sort="auto(kategoriBiaya)">
+								Inisiator
+							</listheader>
+							<listheader align="center"
+								sort="auto(kategoriBiaya)">
+								Tingkatan Jabatan
+							</listheader>
+							<listheader align="center"
+								sort="auto(kategoriBiaya)">
+								Range Pengajuan
+							</listheader>
+							<listheader align="center"
+								sort="auto(kategoriBiaya)">
+								Level
+							</listheader>
+							<listheader align="center"
+								sort="auto(status)">
+								Status
+							</listheader>
+
+							<listheader width="150px" align="center">
+								Aksi
+							</listheader>
+
+						</listhead>
+						<template name="model" var="data">
+							<listitem>
+								<listcell
+									label="@load(data.groupApproval)" />
+								<listcell
+									label="@load(data.kategoriBiaya)" />
+								<listcell
+									label="@load(data.subKategori)" />
+								<listcell
+									label="@load(data.jenisBiaya)" />
+								<listcell
+									label="@load(data.createdDt) @converter('formatedDate', format='dd MMMM yyyy') " />
+								<listcell label="@load(data.inisiator)" />
+								<listcell
+									label="@load(data.tingkatJabatan)" />
+								<listcell
+									label="@load(data.rangePengajuan)" />
+								<listcell label="@load(data.level)" />
+								<listcell label="@load(data.status)" />
+								<listcell>
+									<button iconSclass="z-icon-eye"
+										onClick="@command('viewDetail', dtoView = data) "
+										autodisable="self" />
+									<button iconSclass="z-icon-edit"
+										onClick="@command('updateGroupApprovalDetail',dtoEdit = data)"
+										autodisable="self" />
+									<button iconSclass="z-icon-trash"
+										onClick="@command('deleteGroupApproval',dtoDel = data) "
+										autodisable="self" />
+								</listcell>
+							</listitem>
+						</template>
+					</listbox>
+
+					<div width="98%">
+						<hbox style="width:100%;height:50%">
+							<div align="left"
+								style="margin-top:10px;width:auto;">
+
+								<button onClick="@command('firstPage')"
+									disabled="@load(vm.flagMinPage)" iconSclass="z-icon-backward"
+									sclass="hc-paging" />
+								<button sclass="hc-paging"
+									onClick="@command('prevPage')" disabled="@load(vm.flagMinPage)"
+									iconSclass="z-icon-arrow-left" />
+								<intbox value="@bind(vm.pageNumber)"
+									onOK="@command('searchPage')" style="width:15%;height:30%;" />
+								<label value="/" />
+								<label value="@load(vm.totalPage)" />
+								<button onClick="@command('nextPage')"
+									disabled="@load(vm.flagMaxPage)"
+									iconSclass="z-icon-arrow-right" sclass="hc-paging" />
+								<button onClick="@command('lastPage')"
+									disabled="@load(vm.flagMaxPage)" iconSclass="z-icon-forward"
+									sclass="hc-paging" />
+								<!-- </div> -->
+							</div>
+						</hbox>
+					</div>
+
+				</groupbox>
+
+
+
+			</vlayout>
+
+		</div>
+
+		<div width="auto" height="auto" id="groupApproval"
+			visible="@load(vm.tabGroupApprovalDetail)"
+			style="-webkit-box-shadow: 1px 1px 10px 3px #969696; padding-top:10px; padding-left: 10px;
+			box-shadow: 1px 1px 10px 3px #969696 ; margin-left: 80px; overflow:auto; margin-bottom: 20px">
+
+			<separator spacing="5px"></separator>
+
+			<label style="font-weight: bold; font-size:15px"
+				value="@load(vm.judulDetailGroupApproval)">
+			</label>
+
+			<separator
+				style="height: 1px !important; margin-right: 10px" bar="true">
+			</separator>
+
+
+			<div style="">
+				<grid sclass="GridLayoutNoBorder">
+					<columns>
+						<column width="120px" />
+							<column width="350px" />
+							<column width="150px" />
+							<column width="300px" />
+					</columns>
+					<rows>
+						<row>
+							<label value="Group Approval" />
+							<textbox disabled="@load(vm.flagDisable)" 
+								style="text-transform:uppercase;" width="225px"
+								constraint="no empty : data harus diisi"
+								value="@bind(vm.dto.groupApproval) @save(vm.dto.groupApproval, before = 'saveGroupApproval')"
+								readonly="true" />
+							<label value="Wilayah" />
+							<bandbox id="bdWilayahDetail"
+									onChange="@command('ubahWilayahDetail')" mold="rounded"
+									autodrop="true" constraint="no empty : data harus diisi"
+									value="@bind(vm.selectedComboWilayahDetail.namaWilayah)
+									@save(vm.selectedComboWilayahDetail.namaWilayah, before = 'saveGroupApproval')"
+									style="width:200px" 
+									readonly="true">
+									<bandpopup style="overflow-x:hidden"
+										width="257px" height="auto">
+										<textbox
+											value="@bind(vm.wilayahDetail)" placeholder="Wilayah"
+											style="text-transform: none;"
+											onChange="@command('ubahWilayahDetail')" width="250px"
+											instant="true" />
+
+										<listbox width="250px"
+											mold="paging" pageSize="5" pagingPosition="bottom"
+											model="@load(vm.listComboWilayahDetail)"
+											selectedItem="@bind(vm.selectedComboWilayahDetail)"
+											onSelect="bdWilayahDetail.close();"
+											emptyMessage="Data Tidak Tersedia">
+											<template name="model">
+												<listitem>
+													<listcell
+														onClick="@command('ubahWilayahDetail')"
+														label="@load(each.namaWilayah)" />
+												</listitem>
+											</template>
+										</listbox>
+									</bandpopup>
+								</bandbox>
+						</row>
+						<row>
+							<label value="Kategori Biaya" />
+							<combobox width="225px"
+								disabled="@load(vm.flagDisable)"
+								value="@bind(vm.kategoriBiayaGADetail) @save(vm.kategoriBiayaGADetail, before = 'saveGroupApproval')"
+								constraint="no empty : data harus diisi"
+								onChange="@command('ubahKategoriBiayaDetail')"
+								model="@load(vm.listComboKategoriBiayaDetail)"
+								selectedItem="@bind(vm.selectedComboKategoriBiayaDetail)"
+								readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.kategoriBiaya)"
+										value="@load(data.kodeKategoriBiaya)" />
+								</template>
+							</combobox>
+							<label value="Regional" />
+							<bandbox id="bdRegionalDetail" mold="rounded" 
+									autodrop="true" onChange="@command('ubahRegionalDetail')"
+									disabled="@load(vm.selectedComboWilayahDetail.idWilayah eq null ? 'true' : 'false')"
+									value="@bind(vm.selectedComboRegionalDetail.namaRegional)"
+									style="width:200px" constraint="no empty : data harus diisi"
+									readonly="true">
+									<bandpopup style="overflow-x:hidden"
+										width="257px" height="auto">
+										<textbox
+											value="@bind(vm.regionalDetail)" placeholder="Regional"
+											style="text-transform: none;"
+											onChange="@command('ubahRegionalDetail')" width="250px"
+											instant="true" />
+
+										<listbox width="250px"
+											mold="paging" pageSize="5" pagingPosition="bottom"
+											model="@load(vm.listComboRegionalDetail)"
+											selectedItem="@bind(vm.selectedComboRegionalDetail)"
+											onSelect="bdRegionalDetail.close();"
+											emptyMessage="Data Tidak Tersedia">
+											<template name="model">
+												<listitem>
+													<listcell
+														onClick="@command('ubahRegionalDetail')"
+														label="@load(each.namaRegional)" />
+												</listitem>
+											</template>
+										</listbox>
+									</bandpopup>
+								</bandbox>
+						</row>
+						<row>
+							<label value="Sub Kategori" />
+							<combobox width="225px"
+								constraint="no empty : data harus diisi"
+								value="@bind(vm.subKategoriGADetail) @save(vm.subKategoriGADetail, before = 'saveGroupApproval')"
+								onChange="@command('ubahSubKategoriDetail')"
+								disabled="@load(vm.flagdisableButton)"
+								model="@load(vm.listComboSubKategoriDetail)"
+								selectedItem="@bind(vm.selectedComboSubKategoriDetail)"
+								readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.subKategori)"
+										value="@load(data.kodeSubKategori)" />
+								</template>
+							</combobox>
+							<label value="Cabang" />
+							<bandbox id="bdCabangDetail" mold="rounded"
+									autodrop="true"
+									disabled="@load(vm.selectedComboRegionalDetail.idRegional eq null ? 'true' : 'false')"
+									value="@bind(vm.selectedComboCabangDetail.namaCabang)"
+									style="width:200px" constraint="no empty : data harus diisi"
+									readonly="true">
+									<bandpopup style="overflow-x:hidden"
+										width="257px" height="auto">
+										<textbox
+											value="@bind(vm.cabangDetail)" placeholder="Cabang"
+											style="text-transform: none;"
+											onChange="@command('ubahCabangDetail')" width="250px"
+											instant="true" />
+
+										<listbox width="250px"
+											mold="paging" pageSize="5" pagingPosition="bottom"
+											model="@load(vm.listComboCabangDetail)"
+											selectedItem="@bind(vm.selectedComboCabangDetail)"
+											onSelect="bdCabangDetail.close();"
+											emptyMessage="Data Tidak Tersedia">
+											<template name="model">
+												<listitem>
+													<listcell
+														onClick="bdCabangDetail.close()"
+														label="@load(each.namaCabang)" />
+												</listitem>
+											</template>
+										</listbox>
+									</bandpopup>
+								</bandbox>
+						</row>
+						<row>
+							<label value="Jenis Biaya" />
+							<combobox
+								value="@bind(vm.jenisBiayaGADetail) @save(vm.jenisBiayaGADetail, before = 'saveGroupApproval')"
+								width="225px" constraint="no empty : data harus diisi"
+								disabled="@load(vm.flagdisableButton)"
+								model="@load(vm.listComboJenisBiayaDetail)"
+								selectedItem="@bind(vm.selectedComboJenisBiayaDetail)"
+								readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.jenisBiaya)"
+										value="@load(data.kodeJenisBiaya)" />
+								</template>
+							</combobox>
+						</row>
+
+						<row>
+							<label value="Budget" />
+							<combobox width="225px"
+								disabled="@load(vm.flagDisable)"
+								value="@bind(vm.budgetGADetail) @save(vm.budgetGADetail, before = 'saveGroupApproval')"
+								constraint="no empty : data harus diisi"
+								model="@load(vm.listComboBudgetDetail)"
+								selectedItem="@bind(vm.selectedComboBudgetDetail)"
+								readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.namaParam)" value="@load(data.idParam)" />
+								</template>
+							</combobox>
+						</row>
+						<row>
+							<label value="Inisiator" />
+							<combobox width="225px"
+								disabled="@load(vm.flagDisable)"
+								value="@bind(vm.inisiatorGADetail) @save(vm.inisiatorGADetail, before = 'saveGroupApproval')"
+								constraint="no empty : data harus diisi"
+								model="@load(vm.listComboInisiatorDetail)"
+								selectedItem="@bind(vm.selectedComboInisiatorDetail)"
+								readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.namaParam)" value="@load(data.idParam)" />
+								</template>
+							</combobox>
+						</row>
+						<row>
+							<label value="Tingkat Jabatan" />
+							<combobox width="225px"
+								disabled="@load(vm.flagDisable)"
+								value="@bind(vm.tingkatJabatanGADetail) @save(vm.tingkatJabatanGADetail, before = 'saveGroupApproval')"
+								model="@load(vm.listComboTingkatJabatan)"
+								constraint="no empty : data harus diisi"
+								selectedItem="@bind(vm.selectedComboTingkatJabatan)"
+								readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.namaJabatan)" value="@load(data.idJabatan)" />
+								</template>
+							</combobox>
+						</row>
+						<row>
+							<label value="Range Pengajuan" />
+
+							<hbox>
+								<decimalbox
+									disabled="@load(vm.flagDisable)" format="###,###"
+									constraint="no empty : data harus diisi"
+									value="@bind(vm.dto.startRangePengajuan)" width="100px" />
+								<label
+									style="margin-left:6px; margin-right:4px" value="s/d">
+								</label>
+								<decimalbox id="endRange"
+									disabled="@load(vm.flagDisable || vm.flagTakHingga)" format="###,###"
+									value="@bind(vm.dto.endRangePengajuan)" width="100px" />
+							</hbox>
+
+							<checkbox disabled="@load(vm.flagDisable)" 
+								checked="@bind(vm.flagTakHingga)"
+								onCheck="@command('takHingga')" 
+								style="padding-top:5px !important" label="Tak Terhingga">
+							</checkbox>
+						</row>
+
+						<row>
+							<label value="Status" />
+							<radiogroup
+								selectedItem="@bind(vm.statusGA)">
+								<radio disabled="@load(vm.flagDisable)"
+									label="AKTIF" value="1" selected="@bind(vm.GAAktif)" />
+								<radio disabled="@load(vm.flagDisable)"
+									label="TIDAK AKTIF" selected="@bind(vm.GANonAktif)" value="0" />
+							</radiogroup>
+						</row>
+					</rows>
+				</grid>
+
+
+
+				<button
+					style="margin-top:5px; margin-left:10px; margin-bottom:5px"
+					iconSclass="z-icon-plus" visible="@load(vm.flagButton)"
+					onClick="@command('addListDetailGroupApproval')" />
+
+
+				<listbox mold="paging" pageSize="15" height="auto"
+					style="margin-left:10px;overflow:auto"
+					model="@load(vm.listDetailGroupApproval)"
+					selectedItem="@bind(vm.selectedDetailGroupApproval)"
+					pagingPosition="bottom">
+					<listhead>
+						<listheader align="center"
+							sort="auto(jabatan)">
+							Jabatan
+						</listheader>
+						<listheader align="center"
+							sort="auto(levelJabatan)">
+							Level
+						</listheader>
+
+						<listheader align="center">Aksi</listheader>
+
+					</listhead>
+					<template name="model" var="data">
+						<listitem>
+							<listcell label="@load(data.jabatan)"></listcell>
+							<listcell
+								label="@load(data.levelJabatan)">
+							</listcell>
+							<listcell>
+								<button visible="@load(vm.flagButton)"
+									iconSclass="z-icon-trash"
+									onClick="@command('deleteGroupApprovalDetail', dtoDetail = data) "
+									autodisable="self" />
+							</listcell>
+						</listitem>
+					</template>
+				</listbox>
+
+
+				<hbox
+					style="margin-top:10px; margin-left:10px; margin-bottom:10px">
+					<button visible="@load(vm.flagButton)"
+						iconSclass="z-icon-save" onClick="@command('saveGroupApproval')"
+						autodisable="self" />
+					<button visible="@load(vm.flagButton)"
+						iconSclass="z-icon-times" onClick="@command('batalGroupApproval')"
+						autodisable="self" />
+					<button visible="@load(vm.flagDisable)"
+						iconSclass="z-icon-undo" onClick="@command('batalGroupApproval')"
+						autodisable="self" />
+				</hbox>
+
+
+			</div>
+
+
+
+
+
+		</div>
+
+		<div width="auto" height="380px" id="groupApprovalDetail"
+			visible="@load(vm.tabGroupApprovalListDetail)"
+			style="-webkit-box-shadow: 1px 1px 10px 3px #969696; padding-top:10px; padding-left: 10px;
+			box-shadow: 1px 1px 10px 3px #969696 ; margin-left: 80px; margin-bottom: 20px">
+
+			<separator spacing="5px"></separator>
+
+			<label style="font-weight: bold; font-size:15px"
+				value="Group Approval >> Tambah">
+			</label>
+
+			<separator spacing="15px"></separator>
+
+			<borderlayout style="margin-top: 10px; margin-bottom: 10px"
+				height="70%">
+
+				<center sclass="borderless" autoscroll="true">
+
+
+					<div>
+						<grid sclass="GridLayoutNoBorder">
+							<columns>
+								<column width="150px" />
+								<column width="300px" />
+								<column width="250px" />
+							</columns>
+							<rows>
+								<row>
+									<label value="Jabatan" />
+
+									<bandbox id="bdJabatan"
+										mold="rounded" autodrop="true"
+										value="@bind(vm.selectedComboJabatan.namaJabatan) 
+										@save(vm.dtoDetail.jabatan, before = 'saveGroupApprovalDetail')"
+										style="width:200px" constraint="no empty : data harus diisi"
+										readonly="true">
+										<bandpopup
+											style="overflow-x:hidden" width="257px" height="auto">
+											<textbox
+												value="@bind(vm.jabatan) 
+												@save(vm.dtoDetail.jabatan, before = 'saveGroupApprovalDetail') "
+												placeholder="Jabatan" style="text-transform: none;"
+												onChange="@command('ubahJabatan')" width="250px"
+												instant="true" />
+
+											<listbox width="250px"
+												mold="paging" pageSize="5" pagingPosition="bottom"
+												model="@load(vm.listComboJabatan)"
+												selectedItem="@bind(vm.selectedComboJabatan)"
+												onSelect="@command('pilihJabatan')"
+												emptyMessage="Data Tidak Tersedia">
+												<template
+													name="model">
+													<listitem>
+														<listcell
+															onClick="bdJabatan.close()"
+															label="@load(each.namaJabatan)" />
+													</listitem>
+												</template>
+											</listbox>
+										</bandpopup>
+									</bandbox>
+
+									<!-- <combobox width="200px"
+										model="@load(vm.listComboJabatan)"
+										selectedItem="@bind(vm.selectedComboJabatan)"
+										onSelect="@command('setComboJabatan')"
+										readonly="true" value="@load(vm.comboJabatan)">
+										<template name="model">
+										<comboitem
+										label="@load(each.namaJabatan)"
+										value="@load(each.idJabatan)" />
+										</template>
+										</combobox> -->
+								</row>
+								<row>
+									<label value="Level" />
+									<bandbox id="bdLevel" mold="rounded"
+										autodrop="true"
+										value="@bind(vm.selectedComboLevel.namaParam) 
+										@save(vm.dtoDetail.levelJabatan, before = 'saveGroupApprovalDetail')"
+										style="width:200px" constraint="no empty : data harus diisi"
+										readonly="true">
+										<bandpopup width="250px">
+											<listbox
+												model="@load(vm.listComboLevel)"
+												selectedItem="@bind(vm.selectedComboLevel)"
+												onSelect="bdLevel.close();"
+												emptyMessage="Data Tidak Tersedia">
+												<listhead>
+													<listheader
+														label="Level" sort="auto(namaParam)" />
+												</listhead>
+												<template
+													name="model">
+													<listitem>
+														<listcell
+															onClick="bdLevel.close()" label="@load(each.namaParam)" />
+													</listitem>
+												</template>
+											</listbox>
+										</bandpopup>
+									</bandbox>
+
+
+									<!-- <combobox width="200px"
+										model="@load(vm.listComboLevel)"
+										selectedItem="@bind(vm.selectedComboLevel)" readonly="true">
+										<template name="model"
+										var="data">
+										<comboitem
+										label="@load(data.namaParam)" value="@load(data.idParam)" />
+										</template>
+										</combobox> -->
+								</row>
+
+								<!-- 								<row> -->
+								<!-- 									<label value="Status" /> -->
+								<!-- 									<radiogroup> -->
+								<!-- 										<radio label="Aktif" value="1" -->
+								<!-- 											selected="@load(vm.rBAktifGroupApproval)" /> -->
+								<!-- 										<radio label="Non Aktif" -->
+								<!-- 											selected="@load(vm.rBtidakAKtifGroupApproval)" value="0" /> -->
+								<!-- 									</radiogroup> -->
+								<!-- 								</row> -->
+							</rows>
+						</grid>
+
+
+						<hbox
+							style="margin-top:20px; margin-left:10px">
+							<button iconSclass="z-icon-save"
+								onClick="@command('saveGroupApprovalDetail')"
+								autodisable="self" />
+							<button iconSclass="z-icon-times"
+								onClick="@command('batalGroupApprovalDetail')"
+								autodisable="self" />
+						</hbox>
+
+
+					</div>
+
+				</center>
+
+			</borderlayout>
+
+
+
+
+		</div>
+
+
+
+
+		<include src="/pages/msgDelete.zul" />
+		<include src="/pages/msgSuccessDelete.zul" />
+		<include src="/pages/msgFree.zul" />
+		<include src="/pages/msgDataSudahAda.zul" />
+		<include src="/pages/msgWarningDeleteStatusAktif.zul" />
+		<include src="/pages/msgWarningUpdateStatusAktif.zul" />
+		<include src="/pages/msgSave.zul" />
+		<include src="/pages/msgInvalidNumber.zul" />
+	</window>
+</zk>

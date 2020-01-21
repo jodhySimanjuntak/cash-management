@@ -1,0 +1,8 @@
+<?page  contentType="text/html;charset=UTF-8"?>
+<zk>
+	<div align="center">
+		<image style="margin-bottom: 5px; margin-top:10%" width="auto" height="auto" 
+			src="/images/logo_mandala.png">
+		</image>
+	</div>
+</zk>

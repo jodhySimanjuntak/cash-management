@@ -1,0 +1,150 @@
+package com.mantabs.collection.master.area_assignment.repository;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.mantabs.entity.master.GlobalParam;
+import com.mantabs.entity.master.GroupApprovalDtl;
+import com.mantabs.entity.master.GroupApprovalHdr;
+import com.mantabs.entity.master.JenisBiayaCM;
+import com.mantabs.entity.master.KategoriBiaya;
+import com.mantabs.entity.master.Regional;
+import com.mantabs.entity.master.Wilayah;
+
+public interface GroupApprovalHdrRepository extends  JpaRepository<GroupApprovalHdr, String> {
+
+	@Query(value = "select a.id_kategori_biaya, a.kategori_biaya from mmf_master.mmf_mst_Kategori_Biaya a "
+			+ " where a.status = '1' ", nativeQuery = true)
+	public List<Object[]> getListKategoriBiaya();
+	
+	@Query(value = "select a.id_jenis_biaya, a.jenis_biaya from mmf_master.mmf_mst_jenis_Biaya_cm a "
+			+ " where a.status = '1' and a.sub_kategori =:subKategori ", nativeQuery = true)
+	public List<Object[]> getListJenisBiaya(
+			@Param("subKategori") String subKategori
+			);
+	
+	@Query(value = "select a.id_param, a.nama_param from mmf_master.mmf_mst_Global_Param a "
+			+ " where a.id_Condition = 'STATUS' ", nativeQuery = true)
+	public List<Object[]> getListStatus();
+	
+	@Query(value = "select a.id_param, a.nama_param from mmf_master.mmf_mst_Global_Param a "
+			+ " where a.id_Condition = 'INISIATOR' ", nativeQuery = true)
+	public List<Object[]> getListInisiator();
+	
+	@Query(value = "select a.id_param, a.nama_param from mmf_master.mmf_mst_Global_Param a "
+			+ " where a.id_Condition = 'TIPE_BUDGET' ", nativeQuery = true)
+	public List<Object[]> getListBudget();
+	
+	@Query(value = "select a.id_sub_kategori, a.sub_kategori from mmf_master.mmf_mst_sub_kategori a "
+			+ " where a.status = '1' and a.kategori_Biaya =:kode ", nativeQuery = true)
+	public List<Object[]> getListSubKategori(
+			@Param("kode")String kode
+			);
+	
+	@Query(value = "select case when max(a.id_group_approval) is null "
+			+ " then '0' else max(a.id_group_approval) end from mmf_master.mmf_mst_group_approval_hdr a ", nativeQuery =  true)
+	public int getLastKodeGroupApproval();
+	
+	@Modifying
+	@Query(value = "delete from MMF_MASTER.MMF_MST_GROUP_APPROVAL_DTL where "
+			+ " group_approval =:groupApproval ", nativeQuery = true)
+	public void deleteDetailByHeader(
+			@Param("groupApproval")String groupApproval);
+	
+	@Query(value = " select b.nama_jabatan "
+			+ " from MMF_MASTER.MMF_MST_JABATAN b "
+			+ " join MMF_MASTER.MMF_MST_GROUP_APPROVAL_DTL a on a.jabatan = b.id_jabatan "
+			+ " where a.group_approval =:groupApproval "
+			+ " order by a.level_jabatan asc ",nativeQuery = true)
+	public List<String> getLevelFromDtl(
+			@Param("groupApproval")String groupApproval
+			);
+	
+	@Query(value = " select a.* "
+			+ " from mmf_master.mmf_mst_group_approval_hdr a "
+			+ " where trim(upper (a.id_group_approval))= trim(upper(:groupApproval)) ",nativeQuery = true)
+	public GroupApprovalHdr cekGroupApprovalDanStatus(
+			@Param("groupApproval") String groupApproval
+			);
+	
+	@Query(value = " select a.* "
+			+ " from mmf_master.mmf_mst_group_approval_hdr a "
+			+ " where trim(upper (a.group_approval))= trim(upper(:groupApproval)) "
+			+ " and trim(upper (a.kategori_biaya))= trim(upper(:kategoriBiaya)) "
+			+ " and trim(upper (a.sub_kategori))= trim(upper(:subKategori)) "
+			+ " and trim(upper (a.jenis_biaya))= trim(upper(:jenisBiaya)) "
+			+ " and trim(upper (a.budget))= trim(upper(:budget)) "
+			+ " and trim(upper (a.inisiator))= trim(upper(:inisiator)) "
+			+ " and trim(upper (a.tingkat_jabatan))= trim(upper(:tingkatJabatan)) "
+			+ " and (a.start_range_pengajuan) =:startRangePengajuan "
+			+ " and (a.end_range_pengajuan) =:endRangePengajuan "
+			+ " and a.status = '1' ",nativeQuery = true)
+	public List<GroupApprovalHdr> cekGroupApproval(
+			@Param("groupApproval") String groupApproval,
+			@Param("kategoriBiaya") String kategoriBiaya,
+			@Param("subKategori") String subKategori,
+			@Param("jenisBiaya") String jenisBiaya,
+			@Param("budget") String budget,
+			@Param("inisiator") String inisiator,
+			@Param("tingkatJabatan") String tingkatJabatan,
+			@Param("startRangePengajuan") BigDecimal startRangePengajuan,
+			@Param("endRangePengajuan") BigDecimal endRangePengajuan
+			);
+	
+	@Query(value = " select b.nama_jabatan, c.nama_param , a.created_by, a.created_dt, b.id_jabatan, c.id_param"
+			+ " from mmf_master.mmf_mst_group_approval_dtl a "
+			+ " join mmf_master.mmf_mst_jabatan b on a.jabatan = b.id_jabatan"
+			+ " join mmf_master.mmf_mst_global_param c on a.level_jabatan = c.id_param "
+			+ " where c.id_condition = 'LEVEL_APPROVAL' "
+			+ " and  a.group_Approval =:groupApproval ", nativeQuery = true)
+	public List<Object[]> listDetailByHeader (
+			@Param("groupApproval") String groupApproval
+			);
+	
+	@Modifying
+	@Query(value = " update mmf_master.mmf_mst_group_approval_dtl "
+			+ " set status = 0 "
+			+ " where group_approval =:groupApproval ", nativeQuery = true)
+	public void deleteDetailById(
+			@Param("groupApproval")String groupApproval
+			);
+	
+	@Modifying
+	@Query(value = " update mmf_master.mmf_mst_group_approval_Hdr "
+			+ " set status = 0 "
+			+ " where id_group_approval =:groupApproval ", nativeQuery = true)
+	public void deleteHeaderById(
+			@Param("groupApproval")String groupApproval
+			);
+	
+	@Query(" select a from Wilayah a ")
+	public List<Wilayah> listWilayah ();
+	
+	@Query(" select a from Wilayah a "
+			+ " where a.namaWilayah like :wilayah ")
+	public List<Wilayah> listWilayahWithName (
+			@Param("wilayah")String wilayah
+			);
+	
+	@Query(" select a from Regional a "
+			+ " where idWilayah =:idWilayah ")
+	public List<Regional> listRegional (
+			@Param("idWilayah")String idWilayah
+			);
+	
+	@Query(" select a from Regional a "
+			+ " where trim (upper (a.idWilayah) =:(idWilayah)) "
+			+ " and trim(upper(a.namaRegional)) like trim(upper(:regional)) ")
+	public List<Regional> listRegionalWithName (
+			@Param("idWilayah")String idWilayah,
+			@Param("regional")String regional
+			);
+	
+	
+	
+}

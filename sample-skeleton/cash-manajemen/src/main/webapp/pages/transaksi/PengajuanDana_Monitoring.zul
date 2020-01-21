@@ -1,0 +1,136 @@
+<div>
+	<style dynamic="true">
+		.GridLayoutNoBorder tr.z-row td.z-row-inner, tr.z-row .zcell,
+		div.zgrid, .z-grid { border: none; overflow: hidden; zoom: 1;
+		background: white; border-top: none; border-left: none;
+		border-right: none; border-bottom:none; }
+
+	</style>
+	<div style="background:white;" apply="org.zkoss.bind.BindComposer"
+		xmlns:w="client"
+		viewModel="@id('vm') @init('com.mantabs.collection.master.area_assignment.viewmodel.PengajuanDanaVM')">
+		<div>
+			<vlayout hflex="1">
+				<grid sclass="GridLayoutNoBorder">
+					<columns>
+						<column width="15%" />
+						<column width="35%" />
+						<column width="15%" />
+						<column width="35%" />
+					</columns>
+					<rows>
+						<row style="border-bottom:transparent">
+							<label value="HO" />
+							<combobox width="80%" value=""
+								readonly="true" />
+							<label value="Kategori Biaya" />
+							<combobox width="80%" value="" />
+						</row>
+						<row>
+							<label value="Wilayah" />
+							<combobox readonly="true" width="80%"
+								value="" />
+							<label value="Jenis Biaya" />
+							<combobox width="80%" value="" />
+						</row>
+						<row>
+							<label value="Regional" />
+							<combobox readonly="true" width="80%"
+								value="" />
+							<label value="Tanggal Pengajuan" />
+							<hbox>
+								<datebox width="164px" />
+								<label value="-" />
+								<datebox width="164px" />
+							</hbox>
+
+						</row>
+						<row>
+							<label value="Centro" />
+							<combobox width="80%" readonly="true"
+								value="" />
+							<label value="Status Persetujuan" />
+							<combobox width="80%" value="" />
+						</row>
+						<row>
+							<label value="Cabang" />
+							<decimalbox width="80%" readonly="true" />
+						</row>
+						<row>
+							<label />
+							<label />
+							<button iconSclass="z-icon-filter"
+								onClick="@command('back')" autodisable="self" />
+						</row>
+					</rows>
+				</grid>
+				<separator spacing="50px" bar="true" />
+
+				<separator spacing="25px" />
+
+				<groupbox style="padding-left:10px">
+					<caption label="Hasil Pencarian" />
+
+					<listbox mold="paging" pagingPosition="bottom">
+						<listhead>
+							<listheader align="center"
+								sort="auto(idCentro)">
+								Cabang
+							</listheader>
+							<listheader align="center"
+								sort="auto(idCabang)">
+								Kategori Biaya
+							</listheader>
+							<listheader align="center"
+								sort="auto(jabatan)">
+								Sub Kategori
+							</listheader>
+							<listheader align="center"
+								sort="auto(nama)">
+								Jenis Biaya
+							</listheader>
+							<listheader align="center"
+								sort="auto(namaPortofolio)">
+								Tanggal Pengajuan
+							</listheader>
+							<listheader align="center"
+								sort="auto(namaPortofolio)">
+								Tanggal Approval
+							</listheader>
+							<listheader align="center"
+								sort="auto(namaPortofolio)">
+								Status
+							</listheader>
+							<listheader align="center"
+								sort="auto(createdDt)">
+								Aksi
+							</listheader>
+
+						</listhead>
+						<listitem>
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell>
+								<button iconSclass="z-icon-trash"
+									onClick="@command('delete')" autodisable="self" />
+							</listcell>
+						</listitem>
+					</listbox>
+					<paging pageSize="@load(vm.pageSize)" totalSize="1"
+						activePage="@bind(vm.activePage)" />
+
+				</groupbox>
+
+
+
+
+
+			</vlayout>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,16 @@
+<?link rel="stylesheet" type="text/css" href="/css/login-style.css" ?>
+<zk>
+	<div sclass="login-container">
+		<div sclass="login-content-wrapper">
+			<div sclass="login-logo-wrapper">
+				<image src="/images/logo_mandala.png"
+					sclass="login-logo-pln">
+				</image>
+				<image src="/images/logo_portal.png"
+					sclass="login-logo-portal">
+				</image>
+			</div>
+			<div sclass="notFound">PAGE NOT FOUND</div>
+		</div>
+	</div>
+</zk>

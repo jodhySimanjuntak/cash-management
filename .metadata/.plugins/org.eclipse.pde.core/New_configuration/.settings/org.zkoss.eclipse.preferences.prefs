@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+org.zkoss.eclipse.activator=zkt191119011115_0
+services.report_errorlog=true
+services.report_errorlog_set=true
+services.resource_service_url=https\://studio.zkoss.org/resource
+services.show_welcomepage_at_first_time=false

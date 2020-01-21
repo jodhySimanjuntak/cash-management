@@ -1,0 +1,133 @@
+<zk>
+	<window title="Master Portofolio" border="normal" id="winKolektor" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') 
+	@init('com.mantabs.collection.master.area_assignment.viewmodel.PotofolioKolektorVM')"
+	validationMessages="@id('vmsgs')">
+		<groupbox>
+			<caption>Filter Pencarian Portofolio</caption>
+			<grid width="100%" style="border:none" >
+				<columns>
+					<column align="left" width="7%" />
+					<column align="left" width="20%" />
+					<column align="left" width="5%" />
+					<column align="left" width="9%" />
+					<column align="left" width="20%" />
+				</columns>
+				<rows>
+					<row>
+						<div> Wilayah <label value="*" style="color:red" /> </div>
+						
+							<cell rowspan="4" width="40%">
+							<!-- <bandBox_4_WilayahRegionalCentroCabang
+							reset ="@bind(vm.reset)" 
+							value1="@bind(vm.portofolioViewHDRDTO.mmfMstWilayah)"
+							value2="@bind(vm.portofolioViewHDRDTO.mmfMstRegional)"
+							value3="@bind(vm.portofolioViewHDRDTO.mmfMstCentro) "
+							value4="@bind(vm.cabang)" /> -->
+							</cell>
+							<div/>
+						<div>Klasifikasi Jabatan</div>
+						<cell rowspan="2" width="40%">
+							<!-- <bandBox_2_JabatanKaryawan
+							value1="@bind(vm.portofolioViewHDRDTO.jabatan)"
+							value2="@bind(vm.portofolioViewHDRDTO.mmfMstKaryawan)"
+							idcabang="@bind(vm.cabang.idCabang)"/> -->
+							</cell>
+					</row>
+					<row>
+						<div> Regional <label value="*" style="color:red" /> </div>
+						<div />
+						<div>Nama</div>
+						<div/>
+					</row>
+					<row>
+						<div> Centro <label value="*" style="color:red" /> </div>
+						<div/>
+						<div>Status</div>
+						<div>
+							<comboBoxParamValue width="100%" service="STUS" value="@bind(vm.cbStatus)" />
+						</div>
+					</row>
+					<row>
+						<div>Cabang</div>
+						<div />
+						<div />
+						<div />
+					</row>
+					<row>
+						<div />
+						<div />
+						<div />
+						<div />
+						<div>
+							<hbox pack="end" width="100%">
+								<customButton icon="cari" toolTip="Cari" onClick="@command('search')" />
+								<separator />
+								<customButton icon="clear" toolTip="Clear" onClick="@command('clear')" />
+							</hbox>
+						</div>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<separator />
+		<groupbox>
+			<caption>Data Master Portofolio</caption>
+			<customButton icon="tambah" toolTip="Tambah" onClick="@command('popupCreate')" autodisable="self" />
+		<separator />
+			<vlayout>
+			<listbox mold="paging" pagingPosition="bottom" model="@load(vm.lsData)">
+				<listhead>
+					<listheader width="120px" align="center" sort="auto(idCentro)">
+						Centro
+					</listheader>
+					<listheader width="120px" align="center" sort="auto(idCabang)">
+						Cabang
+					</listheader>
+					<listheader width="150px" align="center" sort="auto(jabatan)">
+						Klasifikasi Jabatan
+					</listheader>
+					<listheader width="120px" align="center" sort="auto(nama)">
+						Nama
+					</listheader>
+					<listheader width="220px" align="center" sort="auto(namaPortofolio)">
+						Portofolio
+					</listheader>
+					<listheader width="220px" align="center" label="Kategori Produk" sort="auto(namaKategoriProduk)" />
+					<listheader width="170px" align="center" sort="auto(createdDt)">
+						Tgl Buat
+					</listheader>
+					<listheader width="160px" align="center" sort="auto(modifieldDt)">
+						Tgl Ubah
+					</listheader>
+					<listheader width="160px" align="center" sort="auto(Status)">
+						Status
+					</listheader>
+					<listheader width="140px" align="center" label="Aksi" />
+				</listhead>
+				<template name="model" var="data">
+					<listitem>
+						<listcell label="@load(data.namaCentro)" />
+						<listcell label="@load(data.namaCabang)" />
+						<listcell label="@load(data.jabatan.jabatan)" />
+						<listcell label="@load(data.namaKaryawan)" />
+						<listcell label="@load(data.namePorto)" />
+						<listcell label="@load(data.nameKatePro)" />
+						<listcell label="@load(data.createdDt)" />
+						<listcell label="@load(data.modifiedDt)" />
+						<listcell label="@load(data.status.status)" />
+						<listcell>
+							<hbox width="100%" align="center">
+								<customButton icon="ubah" toolTip="Ubah" onClick="@command('popupUpdate', dataUbah = data)" autodisable="self" />
+								<space />
+								<customButton decision="true" icon="hapus" toolTip="Hapus" onClick="@command('doDelete', dataHapus = data ,eventOnClick=event.data )" />
+							</hbox>
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
+			<paging pageSize="@load(vm.pageSize)"
+				totalSize="@bind(vm.totalSize)" activePage="@bind(vm.activePage)" />
+		</vlayout>
+		</groupbox>
+	</window>
+</zk>

@@ -1,0 +1,265 @@
+<zk>
+	<style dynamic="true">
+		.GridLayoutNoBorder tr.z-row td.z-row-inner, tr.z-row .zcell,
+		div.zgrid, .z-grid { border: none; overflow: hidden; zoom: 1;
+		background: white; border-top: none; border-left: none;
+		border-right: none; border-bottom:none; }
+		
+		.GroupBoxNew .z-groupbox-content { font-size: 12px; padding:
+		5px; overflow-x: scroll; padding-right: 5px}
+
+	</style>
+	<div style="background:white;" apply="org.zkoss.bind.BindComposer"
+		xmlns:w="client"
+		viewModel="@id('vm') @init('com.mantabs.collection.master.area_assignment.viewmodel.MasterDataVM')">
+		<div visible="@load(vm.subKategoriWindow)">
+			<vlayout hflex="1">
+				<grid sclass="GridLayoutNoBorder">
+					<columns>
+						<column width="150px" />
+						<column width="300px" />
+					</columns>
+					<rows>
+						<row style="border-bottom:transparent">
+							<label value="Kategori Biaya" />
+							<combobox width="225px"
+								model="@load(vm.listComboKategoriBiayaSK)"
+								selectedItem="@bind(vm.selectedComboKategoriBiayaSK)"
+								readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.kategoriBiaya)"
+										value="@load(data.kodeKategoriBiaya)" />
+								</template>
+							</combobox>
+
+						</row>
+						<row style="border-bottom:transparent">
+							<label value="Sub Kategori" />
+							<!-- <combobox width="225px"
+								model="@load(vm.listComboSubKategori)"
+								selectedItem="@bind(vm.selectedComboSubKategori)"
+								readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.subKategori)"
+										value="@load(data.kodeSubKategori)" />
+								</template>
+							</combobox> -->
+							<textbox maxlength="50" style="text-transform:uppercase;" width="225px" value="@bind(vm.subKategori)" />
+
+						</row>
+						<row>
+							<label value="Status" />
+							<combobox width="225px"
+								model="@load(vm.listStatusSK)"
+								selectedItem="@bind(vm.selectedStatusSK)" readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.namaParam)" value="@load(data.idParam)" />
+								</template>
+							</combobox>
+						</row>
+
+					</rows>
+				</grid>
+				<separator spacing="10px" />
+
+				<grid sclass="GridLayoutNoBorder">
+					<columns>
+						<column width="150px" />
+						<column width="300px" />
+					</columns>
+					<rows>
+						<row style="border-bottom:transparent">
+							<label />
+							<hlayout>
+								<button iconSclass="z-icon-filter" tooltiptext="Filter"
+									onClick="@command('filterSK')" autodisable="self" />
+								<button iconSclass="z-icon-refresh" tooltiptext="Refresh"
+									onClick="@command('refresGridSubKategori')"
+									autodisable="self" />
+							</hlayout>
+
+						</row>
+
+					</rows>
+				</grid>
+
+				<groupbox style="margin-bottom: 20px; margin-right:5px" sclass="GroupBoxNew" height="auto">
+					<caption label="Data Master Sub Kategori " />
+
+					<button iconSclass="z-icon-plus" tooltiptext="Tambah"
+						onClick="@command('addSubKategoriBiaya')" />
+
+					<separator style="height:10px !important" />
+
+					<listbox width="fit-content" sizedByContent="true"
+						model="@load(vm.listSubKategori)" >
+						<listhead sizable="true">
+							<listheader align="center" 
+								sort="auto(namaKategoriBiaya)">
+								Kategori Biaya
+							</listheader>
+							<listheader align="center" 
+								sort="auto(kodeSubKategori)">
+								Id Sub Kategori
+							</listheader>
+							<listheader align="center" 
+								sort="auto(subKategori)">
+								Sub Kategori
+							</listheader>
+							<listheader align="center" 
+								sort="auto(status)">
+								Status
+							</listheader>
+
+							<listheader align="center">Aksi</listheader>
+
+						</listhead>
+						<template name="model" var="data">
+							<listitem>
+								<listcell
+									label="@load(data.namaKategoriBiaya)" />
+								<listcell
+									label="@load(data.kodeSubKategori)" />
+								<listcell
+									label="@load(data.subKategori)" />
+								<listcell label="@load(data.status)" />
+								<listcell>
+									<button iconSclass="z-icon-edit" tooltiptext="Ubah"
+										onClick="@command('updateSubKategori', dtoEdit = data)"
+										autodisable="self" />
+									<button iconSclass="z-icon-trash" tooltiptext="Hapus"
+										onClick="@command('deleteSubKategori', dtoSKDel = data)"
+										autodisable="self" />
+								</listcell>
+							</listitem>
+						</template>
+
+					</listbox>
+					
+					<div width="98%">
+						<hbox style="width:100%;height:50%">
+							<div align="left"
+								style="margin-top:10px;width:auto;">
+
+								<button onClick="@command('firstPageSubKategori')"
+									disabled="@load(vm.flagMinPageSubKategori)" iconSclass="z-icon-backward"
+									sclass="hc-paging" />
+								<button sclass="hc-paging"
+									onClick="@command('prevPageSubKategori')" disabled="@load(vm.flagMinPageSubKategori)"
+									iconSclass="z-icon-arrow-left" />
+								<intbox value="@bind(vm.pageNumberSubKategori)"
+									onOK="@command('searchPageSubKategori')" style="width:15%;height:30%;" />
+								<label value="/" />
+								<label value="@load(vm.totalPageSubKategori)" />
+								<button onClick="@command('nextPageSubKategori')"
+									disabled="@load(vm.flagMaxPageSubKategori)"
+									iconSclass="z-icon-arrow-right" sclass="hc-paging" />
+								<button onClick="@command('lastPageSubKategori')"
+									disabled="@load(vm.flagMaxPageSubKategori)" iconSclass="z-icon-forward"
+									sclass="hc-paging" />
+								<!-- </div> -->
+							</div>
+						</hbox>
+					</div>
+					
+					<!-- <paging pageSize="@load(vm.pageSizeSubKategori)" totalSize="@load(vm.totalSizeSubKategori)" /> -->
+				</groupbox>
+
+
+
+			</vlayout>
+		</div>
+
+		<div width="70%" height="510px" id="subkategori"
+			visible="@load(vm.tab2Detail)" 
+			style="-webkit-box-shadow: 1px 1px 10px 3px #969696; padding-top:10px; padding-left: 10px;
+			box-shadow: 1px 1px 10px 3px #969696 ; margin-left: 200px;">
+
+			<separator spacing="5px"></separator>
+
+			<label style="font-weight: bold; font-size:15px"
+				value="@load(vm.judulDetailSubKategori)">
+			</label>
+
+			<separator spacing="15px"></separator>
+
+			<borderlayout style="margin-top: 10px; margin-bottom: 10px" height="88%">
+				<center sclass="borderless" autoscroll="true">
+					<div>
+						<grid sclass="GridLayoutNoBorder">
+							<columns>
+								<column width="150px" />
+								<column width="350px" />
+							</columns>
+							<rows>
+								<row>
+									<label value="Kategori Biaya" />
+									<combobox width="225px"
+									disabled="@load(vm.flagEditKategoriBiayaSK)"
+									 constraint="no empty : data harus diisi"
+										value="@load(vm.kategoriBiayaSKDetail) @save(vm.kategoriBiayaSKDetail, before = 'saveSubKategori')"
+										model="@load(vm.listComboKategoriBiayaSKDetail)"
+										selectedItem="@bind(vm.selectedComboKategoriBiayaSKDetail)"
+										readonly="true">
+										<template name="model"
+											var="data">
+											<comboitem
+												label="@load(data.kategoriBiaya)"
+												value="@load(data.kodeKategoriBiaya)" />
+										</template>
+									</combobox>
+								</row>
+								<row>
+									<label value="Kode Sub Kategori " />
+									<textbox width="225px"
+										readonly="true" 
+										value="@bind(vm.dtoSK.kodeSubKategori)" />
+								</row>
+								<row>
+									<label value="Sub Kategori " />
+									<textbox maxlength="50" width="225px" constraint="no empty : data harus diisi" style="text-transform:uppercase;"
+										value="@bind(vm.dtoSK.subKategori) @save(vm.dtoSK.subKategori, before = 'saveSubKategori')" />
+								</row>
+								<row>
+									<label value="Status" />
+									<radiogroup 
+										selectedItem="@bind(vm.statusSK)">
+										<radio label="AKTIF" value="1"
+											selected="@load(vm.KBAktifSK)" onClick="" />
+										<radio label="TIDAK AKTIF"
+											selected="@load(vm.KBNonAktifSK)" value="0" onClick="" />
+									</radiogroup>
+								</row>
+								<row>
+									<label />
+									<hbox>
+										<button iconSclass="z-icon-save"
+											onClick="@command('saveSubKategori')" autodisable="self" />
+										<button iconSclass="z-icon-times"
+											onClick="@command('batalSubKategoriBiaya')"
+											autodisable="self" />
+									</hbox>
+								</row>
+							</rows>
+						</grid>
+					</div>
+				</center>
+
+			</borderlayout>
+
+
+		</div>
+		<include src="/pages/msgDelete.zul" />
+		<include src="/pages/msgSuccessDelete.zul" />
+		<include src="/pages/msgFree.zul" />
+		<include src="/pages/msgDataSudahAda.zul" />
+		<include src="/pages/msgWarningDeleteStatusAktif.zul" />
+		<include src="/pages/msgWarningUpdateStatusAktif.zul" />
+		<include src="/pages/msgSave.zul" />
+		<include src="/pages/msgInvalidNumber.zul" />
+	</div>
+
+</zk>

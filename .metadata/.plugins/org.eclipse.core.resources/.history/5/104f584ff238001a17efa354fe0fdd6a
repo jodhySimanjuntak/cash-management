@@ -1,0 +1,251 @@
+package com.mantabs.collection.master.area_assignment.service.impl;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.hibernate.query.criteria.internal.expression.function.AggregationFunction.MAX;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
+import org.springframework.data.domain.Sort.Direction;
+
+import com.mantabs.collection.master.area_assignment.controller.BaseDaoImpl;
+import com.mantabs.collection.master.area_assignment.dto.GlobalParamDTO;
+import com.mantabs.collection.master.area_assignment.dto.KategoriBiayaDTO;
+import com.mantabs.collection.master.area_assignment.repository.GlobalParamRepository;
+import com.mantabs.collection.master.area_assignment.repository.JenisBiayaCMRepository;
+import com.mantabs.collection.master.area_assignment.repository.KategoriBiayaRepository;
+import com.mantabs.collection.master.area_assignment.repository.SubKategoriRepository;
+import com.mantabs.collection.master.area_assignment.service.KategoriBiayaService;
+import com.mantabs.collection.master.area_assignment.util.Paging;
+import com.mantabs.collection.master.area_assignment.util.StringUtil;
+import com.mantabs.entity.master.GlobalParam;
+import com.mantabs.entity.master.KategoriBiaya;
+
+@Service("kategoriBiayaService")
+@Transactional
+public class KategoriBiayaServiceImpl extends BaseDaoImpl implements KategoriBiayaService {
+
+	@Autowired
+	private KategoriBiayaRepository kategoriBiayaRepository;
+	
+	@Autowired
+	private SubKategoriRepository subKategoriRepository;
+	
+	@Autowired
+	private JenisBiayaCMRepository jenisBiayaCMRepository;
+
+	@Autowired
+	GlobalParamRepository globalParamRepository;
+
+	private Paging paging = new Paging();
+
+	@Override
+	public Map<String, Object> findAllKategoriBiaya(String kodeKategoriBiaya, String status, int page, int perPage) {
+		// TODO Auto-generated method stub
+
+//		if (kodeKategoriBiaya.equals("") && status.equals("")) {
+//			kodeKategoriBiaya = "";
+//			status = "";
+//		} else {
+		kodeKategoriBiaya = StringUtil.nevl(kodeKategoriBiaya, "%%");
+		status = StringUtil.nevl(status, "%%");
+//		}
+		Date start = new Date();
+		Date end = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+//			String tglStart = "";
+//			String tglEnd = "";
+//			
+//			if (kodeKategoriBiaya.equals("%%") && status.equals("%%") ) {
+//				tglStart = sdf.format(start);
+//				tglEnd = sdf.format(start);
+//			} else {
+//				tglStart = "1-1-1111";
+//				tglEnd = "31-12-9999";
+//			}
+
+		String sql = " select a.id_kategori_biaya, a.kategori_biaya, " + " case when a.status = 1 then 'AKTIF' "
+				+ " when a.status = 0 then 'TIDAK AKTIF' end status, a.created_by, a.created_dt "
+				+ " from MMF_MASTER.MMF_MST_KATEGORI_BIAYA a " + " where upper (a.kategori_biaya) like upper ('"
+				+ kodeKategoriBiaya + "') and " + " a.status like '" + status + "' ";
+//				+ " and to_char(a.created_dt,'dd-MM-yyyy') between  '"+tglStart+"' and '"+tglEnd+"' ";
+
+		int a = 0;
+		if (page == 1) {
+			a = page - 1;
+		} else {
+			a = page - 1;
+		}
+
+		Map<String, Object> mapList = getPaging(sql, paging.getPageable(a, perPage, "asc", "id_kategori_biaya"));
+
+		@SuppressWarnings("unchecked")
+		List<Object[]> objData = (List<Object[]>) mapList.get("contentData");
+		List<KategoriBiayaDTO> listDto = new ArrayList<>();
+
+		for (Object[] o : objData) {
+			KategoriBiayaDTO dto = new KategoriBiayaDTO();
+			dto.setKodeKategoriBiaya((String) o[0]);
+			dto.setKategoriBiaya((String) o[1]);
+			dto.setStatus((String) o[2]);
+			dto.setCreatedBy((String) o[3]);
+			dto.setCreatedDt((Date) o[4]);
+			listDto.add(dto);
+		}
+
+		int jumlahHalaman = 0;
+		int totalSize;
+		if ((int) mapList.get("totalRecords") == 0) {
+			totalSize = 1;
+		} else {
+			totalSize = (int) mapList.get("totalRecords");
+		}
+		jumlahHalaman = totalSize / perPage;
+		if (totalSize % perPage > 0) {
+			jumlahHalaman++;
+		}
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("totalSize", mapList.get("totalRecords"));
+		map.put("list", listDto);
+		map.put("totalPage", jumlahHalaman);
+
+		return map;
+	}
+
+	@Override
+	public List<GlobalParamDTO> comboStatus() {
+		// TODO Auto-generated method stub
+		List<GlobalParam> listObj = globalParamRepository.getListStatus();
+		List<GlobalParamDTO> listDto = new ArrayList<>();
+
+		for (GlobalParam o : listObj) {
+			GlobalParamDTO dto = new GlobalParamDTO();
+			dto.setIdParam(o.getIdParam());
+			dto.setNamaParam(o.getNamaParam());
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public void saveKategoriBiaya(KategoriBiayaDTO kategoriBiayaDTO) {
+		// TODO Auto-generated method stub
+		if (kategoriBiayaDTO.getKodeKategoriBiaya() != null) {
+			KategoriBiaya dto = new KategoriBiaya();
+
+			dto.setKodeKategoriBiaya(kategoriBiayaDTO.getKodeKategoriBiaya());
+			dto.setKategoriBiaya(kategoriBiayaDTO.getKategoriBiaya().toUpperCase());
+			dto.setStatus(kategoriBiayaDTO.getStatus());
+			dto.setCreatedBy(kategoriBiayaDTO.getCreatedBy().toUpperCase());
+			dto.setCreatedDt(kategoriBiayaDTO.getCreatedDt());
+			dto.setModifiedBy(kategoriBiayaDTO.getModifiedBy().toUpperCase());
+			dto.setModifiedDt(new Date());
+
+			kategoriBiayaRepository.save(dto);
+		} else {
+			KategoriBiaya dto = new KategoriBiaya();
+
+			int kode = kategoriBiayaRepository.getLastKodeKategoriBiaya();
+
+			if (kode == 0) {
+				kode = 1;
+			} else {
+				kode = kode + 1;
+			}
+			int kodeKategoriBiaya = kode;
+
+			dto.setKodeKategoriBiaya(kodeKategoriBiaya + "");
+			dto.setKategoriBiaya(kategoriBiayaDTO.getKategoriBiaya().toUpperCase());
+			dto.setStatus(kategoriBiayaDTO.getStatus());
+			dto.setCreatedBy(kategoriBiayaDTO.getCreatedBy().toUpperCase());
+			dto.setCreatedDt(new Date());
+
+			kategoriBiayaRepository.save(dto);
+		}
+
+	}
+
+	@Override
+	public void deleteKategoriBiaya(String kodeKategoriBiaya) {
+		// TODO Auto-generated method stub
+		kategoriBiayaRepository.deleteKategoriBiaya(kodeKategoriBiaya);
+		subKategoriRepository.deleteSubKategoriByKategoriBiaya(kodeKategoriBiaya);
+		jenisBiayaCMRepository.deleteJenisBiayaByKategoriBiaya(kodeKategoriBiaya);
+		
+	}
+
+	@Override
+	public List<KategoriBiayaDTO> comboKategoriBiaya() {
+		// TODO Auto-generated method stub
+		List<KategoriBiaya> listObj = kategoriBiayaRepository.getListKategoriBiaya();
+		List<KategoriBiayaDTO> listDto = new ArrayList<>();
+
+		for (KategoriBiaya o : listObj) {
+			KategoriBiayaDTO dto = new KategoriBiayaDTO();
+			dto.setKodeKategoriBiaya(o.getKodeKategoriBiaya());
+			dto.setKategoriBiaya(o.getKategoriBiaya());
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public List<KategoriBiayaDTO> comboKategoriBiayaSKDetail() {
+		// TODO Auto-generated method stub
+		List<KategoriBiaya> listObj = kategoriBiayaRepository.getListKategoriBiaya();
+		List<KategoriBiayaDTO> listDto = new ArrayList<>();
+
+		for (KategoriBiaya o : listObj) {
+			KategoriBiayaDTO dto = new KategoriBiayaDTO();
+			dto.setKodeKategoriBiaya(o.getKodeKategoriBiaya());
+			dto.setKategoriBiaya(o.getKategoriBiaya());
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public List<KategoriBiayaDTO> cekKategoriBiaya(String kategoriBiaya) {
+		// TODO Auto-generated method stub
+		List<KategoriBiaya> listObj = kategoriBiayaRepository.cekKategoriBiaya(kategoriBiaya);
+		List<KategoriBiayaDTO> listDto = new ArrayList<>();
+
+		for (KategoriBiaya o : listObj) {
+			KategoriBiayaDTO dto = new KategoriBiayaDTO();
+			dto.setKodeKategoriBiaya(o.getKodeKategoriBiaya());
+			dto.setKategoriBiaya(o.getKategoriBiaya());
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public KategoriBiayaDTO cekKategoriBiayaDanStatus(String kategoriBiaya) {
+		// TODO Auto-generated method stub
+		KategoriBiaya dto = kategoriBiayaRepository.cekKategoriBiayaDanStatus(kategoriBiaya);
+
+		KategoriBiayaDTO dtoNew = new KategoriBiayaDTO();
+		
+		if (dto!= null) {
+			dtoNew.setKodeKategoriBiaya(dto.getKodeKategoriBiaya());
+			dtoNew.setKategoriBiaya(dto.getKategoriBiaya());
+			dtoNew.setStatus(dto.getStatus());
+		}
+		
+
+		return dtoNew;
+	}
+
+}

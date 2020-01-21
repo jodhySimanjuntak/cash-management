@@ -1,0 +1,5 @@
+<?init class="com.mantabs.collection.master.area_assignment.viewmodel.CekLogoutVmd"?>
+<zk>
+<window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.mantabs.collection.master.area_assignment.viewmodel.LogoutVmd')">
+</window>
+</zk>

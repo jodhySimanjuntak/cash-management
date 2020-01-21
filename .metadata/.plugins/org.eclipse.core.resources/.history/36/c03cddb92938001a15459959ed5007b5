@@ -1,0 +1,593 @@
+package com.mantabs.collection.master.area_assignment.service.impl;
+
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.mantabs.collection.master.area_assignment.controller.BaseDaoImpl;
+import com.mantabs.collection.master.area_assignment.dto.CabangDto;
+import com.mantabs.collection.master.area_assignment.dto.GlobalParamDTO;
+import com.mantabs.collection.master.area_assignment.dto.GroupApprovalDtlDto;
+import com.mantabs.collection.master.area_assignment.dto.GroupApprovalHdrDto;
+import com.mantabs.collection.master.area_assignment.dto.JenisBiayaCMDTO;
+import com.mantabs.collection.master.area_assignment.dto.KategoriBiayaDTO;
+import com.mantabs.collection.master.area_assignment.dto.RegionalDto;
+import com.mantabs.collection.master.area_assignment.dto.SubKategoriDTO;
+import com.mantabs.collection.master.area_assignment.dto.WilayahDto;
+import com.mantabs.collection.master.area_assignment.repository.GroupApprovalDtlRepository;
+import com.mantabs.collection.master.area_assignment.repository.GroupApprovalHdrRepository;
+import com.mantabs.collection.master.area_assignment.repository.KategoriBiayaRepository;
+import com.mantabs.collection.master.area_assignment.service.GroupApprovalHdrSvc;
+import com.mantabs.collection.master.area_assignment.util.Paging;
+import com.mantabs.collection.master.area_assignment.util.StringUtil;
+import com.mantabs.entity.master.Cabang;
+import com.mantabs.entity.master.GlobalParam;
+import com.mantabs.entity.master.GroupApprovalDtl;
+import com.mantabs.entity.master.GroupApprovalHdr;
+import com.mantabs.entity.master.JenisBiayaCM;
+import com.mantabs.entity.master.KategoriBiaya;
+import com.mantabs.entity.master.Regional;
+import com.mantabs.entity.master.Wilayah;
+
+import ma.glasnost.orika.MapperFacade;
+
+@Service("groupApprovalHdrSvc")
+@Transactional
+public class GroupApprovalHdrSvcImpl extends BaseDaoImpl implements GroupApprovalHdrSvc {
+
+	@Autowired
+	private GroupApprovalHdrRepository groupApprovalHdrRepository;
+
+	@Autowired
+	private GroupApprovalDtlRepository groupApprovalDtlRepository;
+
+	@Autowired
+	private MapperFacade mapperFacade;
+
+	private Paging paging = new Paging();
+
+	@Override
+	public List<GlobalParamDTO> comboLevel() {
+		// TODO Auto-generated method stub
+		List<Object[]> listObj = groupApprovalHdrRepository.getListStatus();
+		List<GlobalParamDTO> listDto = new ArrayList<>();
+
+		GlobalParamDTO dtoNew = new GlobalParamDTO();
+		dtoNew.setIdParam("%%");
+		dtoNew.setNamaParam("-All-");
+		listDto.add(dtoNew);
+
+		for (Object[] o : listObj) {
+			GlobalParamDTO dto = new GlobalParamDTO();
+			dto.setIdParam((String) o[0]);
+			dto.setNamaParam((String) o[1]);
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public List<KategoriBiayaDTO> comboKategoriBiaya() {
+		// TODO Auto-generated method stub
+		List<Object[]> listObj = groupApprovalHdrRepository.getListKategoriBiaya();
+		List<KategoriBiayaDTO> listDto = new ArrayList<>();
+
+		for (Object[] o : listObj) {
+			KategoriBiayaDTO dto = new KategoriBiayaDTO();
+			dto.setKodeKategoriBiaya((String) o[0]);
+			dto.setKategoriBiaya((String) o[1]);
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public List<JenisBiayaCMDTO> comboJenisBiaya(String katagoriBiaya) {
+		// TODO Auto-generated method stub
+		List<Object[]> listObj = groupApprovalHdrRepository.getListJenisBiaya(katagoriBiaya);
+		List<JenisBiayaCMDTO> listDto = new ArrayList<>();
+
+		for (Object[] o : listObj) {
+			JenisBiayaCMDTO dto = new JenisBiayaCMDTO();
+			dto.setKodeJenisBiaya((String) o[0]);
+			dto.setJenisBiaya((String) o[1]);
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public List<GlobalParamDTO> comboInisiator() {
+		// TODO Auto-generated method stub
+		List<Object[]> listObj = groupApprovalHdrRepository.getListInisiator();
+		List<GlobalParamDTO> listDto = new ArrayList<>();
+
+		GlobalParamDTO dtoNew = new GlobalParamDTO();
+		dtoNew.setIdParam("%%");
+		dtoNew.setNamaParam("-All-");
+		listDto.add(dtoNew);
+
+		for (Object[] o : listObj) {
+			GlobalParamDTO dto = new GlobalParamDTO();
+			dto.setIdParam((String) o[0]);
+			dto.setNamaParam((String) o[1]);
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public List<GlobalParamDTO> comboLevelDetail() {
+		// TODO Auto-generated method stub
+		List<Object[]> listObj = groupApprovalHdrRepository.getListStatus();
+		List<GlobalParamDTO> listDto = new ArrayList<>();
+
+		for (Object[] o : listObj) {
+			GlobalParamDTO dto = new GlobalParamDTO();
+			dto.setIdParam((String) o[0]);
+			dto.setNamaParam((String) o[1]);
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public List<KategoriBiayaDTO> comboKategoriBiayaDetail() {
+		// TODO Auto-generated method stub
+		List<Object[]> listObj = groupApprovalHdrRepository.getListKategoriBiaya();
+		List<KategoriBiayaDTO> listDto = new ArrayList<>();
+
+		for (Object[] o : listObj) {
+			KategoriBiayaDTO dto = new KategoriBiayaDTO();
+			dto.setKodeKategoriBiaya((String) o[0]);
+			dto.setKategoriBiaya((String) o[1]);
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public List<JenisBiayaCMDTO> comboJenisBiayaDetail(String katagoriBiaya) {
+		// TODO Auto-generated method stub
+		List<Object[]> listObj = groupApprovalHdrRepository.getListJenisBiaya(katagoriBiaya);
+		List<JenisBiayaCMDTO> listDto = new ArrayList<>();
+
+		for (Object[] o : listObj) {
+			JenisBiayaCMDTO dto = new JenisBiayaCMDTO();
+			dto.setKodeJenisBiaya((String) o[0]);
+			dto.setJenisBiaya((String) o[1]);
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public List<GlobalParamDTO> comboInisiatorDetail() {
+		// TODO Auto-generated method stub
+		List<Object[]> listObj = groupApprovalHdrRepository.getListInisiator();
+		List<GlobalParamDTO> listDto = new ArrayList<>();
+
+		for (Object[] o : listObj) {
+			GlobalParamDTO dto = new GlobalParamDTO();
+			dto.setIdParam((String) o[0]);
+			dto.setNamaParam((String) o[1]);
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public List<GlobalParamDTO> comboBudgetDetail() {
+		// TODO Auto-generated method stub
+		List<Object[]> listObj = groupApprovalHdrRepository.getListBudget();
+		List<GlobalParamDTO> listDto = new ArrayList<>();
+
+		for (Object[] o : listObj) {
+			GlobalParamDTO dto = new GlobalParamDTO();
+			dto.setIdParam((String) o[0]);
+			dto.setNamaParam((String) o[1]);
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public List<SubKategoriDTO> comboSubKategori(String kode) {
+		// TODO Auto-generated method stub
+		List<Object[]> listObj = groupApprovalHdrRepository.getListSubKategori(kode);
+		List<SubKategoriDTO> listDto = new ArrayList<>();
+
+		for (Object[] o : listObj) {
+			SubKategoriDTO dto = new SubKategoriDTO();
+			dto.setKodeSubKategori((String) o[0]);
+			dto.setSubKategori((String) o[1]);
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public void saveGroupApproval(GroupApprovalHdrDto groupApprovalHdrDto) {
+		// TODO Auto-generated method stub
+		List<GroupApprovalDtl> listDetail = new ArrayList<>();
+		if (groupApprovalHdrDto.getSeqNo() != null) {
+			GroupApprovalHdr dto = new GroupApprovalHdr();
+
+			groupApprovalHdrRepository.deleteDetailByHeader(groupApprovalHdrDto.getKodeGroupApproval());
+
+			dto.setKodeGroupApproval(groupApprovalHdrDto.getKategoriBiaya());
+			dto.setGroupApproval(groupApprovalHdrDto.getGroupApproval());
+			dto.setKategoriBiaya(groupApprovalHdrDto.getKategoriBiaya().toUpperCase());
+			dto.setSubKategori(groupApprovalHdrDto.getSubKategori());
+			dto.setJenisBiaya(groupApprovalHdrDto.getJenisBiaya());
+			dto.setStatus(groupApprovalHdrDto.getStatus());
+			dto.setBudget(groupApprovalHdrDto.getBudget());
+			dto.setInisiator(groupApprovalHdrDto.getInisiator());
+			dto.setTingkatJabatan(groupApprovalHdrDto.getTingkatJabatan());
+			dto.setStartRangePengajuan(groupApprovalHdrDto.getStartRangePengajuan());
+			dto.setEndRangePengajuan(groupApprovalHdrDto.getEndRangePengajuan());
+			dto.setBranchId(groupApprovalHdrDto.getBranchId());
+			dto.setCreatedBy(groupApprovalHdrDto.getCreatedBy());
+			dto.setCreatedDt(groupApprovalHdrDto.getCreatedDt());
+			dto.setModifiedBy(groupApprovalHdrDto.getModifiedBy());
+			dto.setModofiedDt(new Date());
+
+			int a = 1;
+			for (GroupApprovalDtlDto dtl : groupApprovalHdrDto.getGroupApprovalDtlDtos()) {
+				GroupApprovalDtl dtoDtl = new GroupApprovalDtl();
+				dtoDtl.setSeqNo(a);
+				dtoDtl.setGroupApproval(groupApprovalHdrDto.getKodeGroupApproval());
+				dtoDtl.setJabatan(dtl.getKodeJabatan());
+				dtoDtl.setLevelJabatan(dtl.getKodeLevelJabatan());
+				dtoDtl.setStatus("1");
+				if (dtl.getCreatedBy() != null) {
+					dtoDtl.setCreatedBy(dtl.getCreatedBy());
+					dtoDtl.setCraetedDt(dtl.getCraetedDt());
+				} else {
+					dtoDtl.setCreatedBy(groupApprovalHdrDto.getModifiedBy());
+					dtoDtl.setCraetedDt(new Date());
+				}
+
+				dtoDtl.setModifiedBy(groupApprovalHdrDto.getModifiedBy());
+				dtoDtl.setModifiedDt(new Date());
+				a++;
+				listDetail.add(dtoDtl);
+			}
+			groupApprovalDtlRepository.saveAll(listDetail);
+			groupApprovalHdrRepository.save(dto);
+		} else {
+			int lastID = groupApprovalHdrRepository.getLastKodeGroupApproval();
+
+			if (lastID == 0) {
+				lastID = 1;
+			} else {
+				lastID = lastID + 1;
+			}
+			GroupApprovalHdr dto = new GroupApprovalHdr();
+
+			dto.setSeqNo(lastID);
+			dto.setKodeGroupApproval(groupApprovalHdrDto.getKategoriBiaya());
+			dto.setGroupApproval(groupApprovalHdrDto.getGroupApproval().toUpperCase());
+			dto.setKategoriBiaya(groupApprovalHdrDto.getKategoriBiaya().toUpperCase());
+			dto.setSubKategori(groupApprovalHdrDto.getSubKategori());
+			dto.setJenisBiaya(groupApprovalHdrDto.getJenisBiaya());
+			dto.setStatus(groupApprovalHdrDto.getStatus());
+			dto.setBudget(groupApprovalHdrDto.getBudget());
+			dto.setInisiator(groupApprovalHdrDto.getInisiator());
+			dto.setTingkatJabatan(groupApprovalHdrDto.getTingkatJabatan());
+			dto.setBranchId(groupApprovalHdrDto.getBranchId());
+			dto.setStartRangePengajuan(groupApprovalHdrDto.getStartRangePengajuan());
+			dto.setEndRangePengajuan(groupApprovalHdrDto.getEndRangePengajuan());
+			dto.setCreatedBy(groupApprovalHdrDto.getCreatedBy());
+			dto.setCreatedDt(new Date());
+
+			int a = 1;
+			for (GroupApprovalDtlDto dtl : groupApprovalHdrDto.getGroupApprovalDtlDtos()) {
+				GroupApprovalDtl dtoDtl = new GroupApprovalDtl();
+				dtoDtl.setSeqNo(a);
+				dtoDtl.setGroupApproval(groupApprovalHdrDto.getKategoriBiaya() + "");
+				dtoDtl.setJabatan(dtl.getKodeJabatan());
+				dtoDtl.setLevelJabatan(dtl.getKodeLevelJabatan());
+				dtoDtl.setStatus("1");
+				dtoDtl.setCreatedBy(groupApprovalHdrDto.getCreatedBy());
+				dtoDtl.setCraetedDt(new Date());
+				a++;
+				listDetail.add(dtoDtl);
+			}
+			groupApprovalDtlRepository.saveAll(listDetail);
+			groupApprovalHdrRepository.save(dto);
+
+		}
+	}
+
+	@Override
+	public Map<String, Object> findAllGroupApprovalHdr(String kategoriBiaya, String subKategori, String jenisBiaya,
+			String groupApproval, String status, String inisiator, int page, int perPage) {
+		// TODO Auto-generated method stub
+
+		kategoriBiaya = StringUtil.nevl(kategoriBiaya, "%%");
+		subKategori = StringUtil.nevl(subKategori, "%%");
+		jenisBiaya = StringUtil.nevl(jenisBiaya, "%%");
+		groupApproval = StringUtil.nevl(groupApproval, "%%");
+		status = StringUtil.nevl(status, "%%");
+		inisiator = StringUtil.nevl(inisiator, "%%");
+
+		String sql = " select a.id_group_approval, a.group_approval, b.id_kategori_biaya, b.kategori_biaya,"
+				+ " c.id_sub_kategori, c.sub_kategori, "
+				+ " d.id_jenis_biaya, d.jenis_biaya, e.id_param as id_budged, e.nama_param as nama_budged,"
+				+ " f.id_param as id_inisiator , f.nama_param as nama_inisiator,"
+				+ " g.id_jabatan, g.nama_jabatan, a.start_range_pengajuan, a.end_range_pengajuan, "
+				+ " case when a.status = '1' then 'AKTIF' else 'TIDAK AKTIF' end," + " a.created_by, a.created_dt,"
+				+ " a.branch_id, h.nama_cabang, a.seq_no "
+				+ " from MMF_MASTER.MMF_MST_GROUP_APPROVAL_HDR a "
+				+ " join MMF_MASTER.MMF_MST_KATEGORI_BIAYA b on a.kategori_biaya = b.id_kategori_biaya "
+				+ " join MMF_MASTER.MMF_MST_SUB_KATEGORI c on a.sub_kategori = c.id_sub_kategori "
+				+ " join MMF_MASTER.MMF_MST_JENIS_BIAYA_CM d on a.jenis_biaya = d.id_jenis_biaya"
+				+ " join MMF_MASTER.MMF_MST_GLOBAL_PARAM e on a.budget = e.id_param "
+				+ " join MMF_MASTER.MMF_MST_GLOBAL_PARAM f on a.inisiator = f.id_param "
+				+ " join MMF_MASTER.MMF_MST_JABATAN g on a.tingkat_jabatan = g.id_jabatan"
+				+ " join MMF_MASTER.MMF_MST_CABANG h on a.branch_id = h.id_cabang "
+				+ " where e.id_condition = 'TIPE_BUDGET' and F.id_condition = 'INISIATOR' "
+				+ " and upper (a.kategori_biaya) like upper ('" + kategoriBiaya + "') "
+				+ " and upper (a.sub_kategori) like upper ('" + subKategori + "') "
+				+ " and upper (a.jenis_biaya) like upper ('" + jenisBiaya + "') "
+				+ " and upper (a.group_approval) like upper ('" + groupApproval + "') " + " and a.status like '"
+				+ status + "' " + " and a.inisiator like upper ('" + inisiator + "') ";
+
+		int a = 0;
+		if (page == 1) {
+			a = page - 1;
+		} else {
+			a = page - 1;
+		}
+
+		Map<String, Object> mapList = getPaging(sql, paging.getPageable(a, perPage, "asc", "id_group_approval"));
+
+		@SuppressWarnings("unchecked")
+		List<Object[]> objData = (List<Object[]>) mapList.get("contentData");
+		List<GroupApprovalHdrDto> listDto = new ArrayList<>();
+
+		for (Object[] o : objData) {
+			GroupApprovalHdrDto dto = new GroupApprovalHdrDto();
+			dto.setKodeGroupApproval((String) o[0]);
+			dto.setGroupApproval((String) o[1]);
+			dto.setKodeKategoriBiaya((String) o[2]);
+			dto.setKategoriBiaya((String) o[3]);
+			dto.setKodeSubKategori((String) o[4]);
+			dto.setSubKategori((String) o[5]);
+			dto.setKodeJenisBiaya((String) o[6]);
+			dto.setJenisBiaya((String) o[7]);
+			dto.setKodeBudget((String) o[8]);
+			dto.setBudget((String) o[9]);
+			dto.setKodeInisiator((String) o[10]);
+			dto.setInisiator((String) o[11]);
+			dto.setKodeTingkatJabatan((String) o[12]);
+			dto.setTingkatJabatan((String) o[13]);
+			dto.setStartRangePengajuan((BigDecimal) o[14]);
+			dto.setEndRangePengajuan((BigDecimal) o[15]);
+
+			List<String> listString = groupApprovalHdrRepository.getLevelFromDtl((String) o[0]);
+
+			List<String> listStringBaru = new ArrayList<>();
+
+			String[] arr = new String[listString.size()];
+			arr = listString.toArray(arr);
+
+			String data = "";
+
+			int i = 1;
+			for (String s : arr) {
+				data = "LEVEL " + i + ": " + s;
+				listStringBaru.add(data);
+				i++;
+			}
+
+			String joinedString = String.join(" , ", listStringBaru);
+
+			DecimalFormat f = new DecimalFormat("###,###");
+			dto.setLevel(joinedString);
+			dto.setRangePengajuan("Rp. " + f.format(o[14]) + " s/d " + " Rp. " + f.format(o[15]));
+			dto.setStatus((String) o[16]);
+			dto.setCreatedBy((String) o[17]);
+			dto.setCreatedDt((Date) o[18]);
+			dto.setBranchId((String)o[19]);
+			dto.setNamaCabang((String)o[20]);
+			dto.setSeqNo((Inteintger)o[21]);
+			listDto.add(dto);
+		}
+
+		int jumlahHalaman = 0;
+		int totalSize;
+		if ((int) mapList.get("totalRecords") == 0) {
+			totalSize = 1;
+		} else {
+			totalSize = (int) mapList.get("totalRecords");
+		}
+		jumlahHalaman = totalSize / perPage;
+		if (totalSize % perPage > 0) {
+			jumlahHalaman++;
+		}
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("totalSize", mapList.get("totalRecords"));
+		map.put("list", listDto);
+		map.put("totalPage", jumlahHalaman);
+
+		return map;
+	}
+
+	@Override
+	public List<GroupApprovalHdrDto> cekGroupApproval(String groupApproval, String kategoriBiaya, String subKategori,
+			String jenisBiaya, String budget, String inisiator, String tingkatJabatan, BigDecimal startRangePengajuan,
+			BigDecimal endRangePengajuan) {
+		// TODO Auto-generated method stub
+		List<GroupApprovalHdr> listObj = groupApprovalHdrRepository.cekGroupApproval(groupApproval, kategoriBiaya,
+				subKategori, jenisBiaya, budget, inisiator, tingkatJabatan, startRangePengajuan, endRangePengajuan);
+		List<GroupApprovalHdrDto> listDto = new ArrayList<>();
+
+		for (GroupApprovalHdr o : listObj) {
+			GroupApprovalHdrDto dto = new GroupApprovalHdrDto();
+			dto.setKodeGroupApproval(o.getKodeGroupApproval());
+			dto.setGroupApproval(o.getGroupApproval());
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public GroupApprovalHdrDto cekGroupApprovalDanStatus(String groupApproval) {
+		// TODO Auto-generated method stub
+		GroupApprovalHdr dto = groupApprovalHdrRepository.cekGroupApprovalDanStatus(groupApproval);
+
+		GroupApprovalHdrDto dtoNew = new GroupApprovalHdrDto();
+
+		if (dto != null) {
+			dtoNew.setKodeGroupApproval(dto.getKodeGroupApproval());
+			dtoNew.setKategoriBiaya(dto.getKategoriBiaya());
+			dtoNew.setSubKategori(dto.getSubKategori());
+			dtoNew.setJenisBiaya(dto.getJenisBiaya());
+			dtoNew.setBudget(dto.getBudget());
+			dtoNew.setInisiator(dto.getInisiator());
+			dtoNew.setTingkatJabatan(dto.getTingkatJabatan());
+			dtoNew.setGroupApproval(dto.getGroupApproval());
+			dtoNew.setStatus(dto.getStatus());
+			dtoNew.setStartRangePengajuan(dto.getStartRangePengajuan());
+			dtoNew.setEndRangePengajuan(dto.getEndRangePengajuan());
+		}
+
+		return dtoNew;
+	}
+
+	@Override
+	public List<GroupApprovalDtlDto> getListDetailByHeader(String groupApproval) {
+		// TODO Auto-generated method stub
+		List<Object[]> listObj = groupApprovalHdrRepository.listDetailByHeader(groupApproval);
+
+		List<GroupApprovalDtlDto> listDto = new ArrayList<>();
+
+		for (Object[] o : listObj) {
+			GroupApprovalDtlDto dto = new GroupApprovalDtlDto();
+			dto.setJabatan((String) o[0]);
+			dto.setLevelJabatan((String) o[1]);
+			dto.setCreatedBy((String) o[2]);
+			dto.setCraetedDt((Date) o[3]);
+			dto.setKodeJabatan((String) o[4]);
+			dto.setKodeLevelJabatan((String) o[5]);
+//			dto.setGroupApproval(o.getGroupApproval());
+//			dto.setJabatan(o.getJabatan());
+//			dto.setLevelJabatan(o.getLevelJabatan());
+//			if (o.getStatus().equals("1")) {
+//				dto.setStatus("AKTIF");
+//			} else {
+//				dto.setStatus("TIDAK AKTIF");
+//			}
+//			dto.setCreatedBy(o.getCreatedBy());
+//			dto.setCraetedDt(o.getCraetedDt());
+			listDto.add(dto);
+		}
+
+		return listDto;
+	}
+
+	@Override
+	public void deleteHeaderAndList(GroupApprovalHdrDto groupApprovalHdrDto) {
+		// TODO Auto-generated method stub
+		groupApprovalHdrRepository.deleteDetailById(groupApprovalHdrDto.getKodeGroupApproval());
+
+		groupApprovalHdrRepository.deleteHeaderById(groupApprovalHdrDto.getKodeGroupApproval());
+	}
+
+	@Override
+	public List<WilayahDto> comboListWilayah() {
+		// TODO Auto-generated method stub
+		List<Wilayah> listObj = groupApprovalHdrRepository.listWilayah();
+
+		List<WilayahDto> listDto = new ArrayList<>();
+
+		for (Wilayah o : listObj) {
+			WilayahDto dto = mapperFacade.map(o, WilayahDto.class);
+			listDto.add(dto);
+		}
+		return listDto;
+
+	}
+
+	@Override
+	public List<WilayahDto> comboListWilayahWithName(String wilayah) {
+		// TODO Auto-generated method stub
+		List<Wilayah> listObj = groupApprovalHdrRepository.listWilayahWithName(wilayah);
+
+		List<WilayahDto> listDto = new ArrayList<>();
+
+		for (Wilayah o : listObj) {
+			WilayahDto dto = mapperFacade.map(o, WilayahDto.class);
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public List<RegionalDto> comboListRegionalWithIdWilayah(String wilayah) {
+		// TODO Auto-generated method stub
+		List<Regional> listObj = groupApprovalHdrRepository.listRegional(wilayah);
+
+		List<RegionalDto> listDto = new ArrayList<>();
+
+		for (Regional o : listObj) {
+			RegionalDto dto = mapperFacade.map(o, RegionalDto.class);
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public List<RegionalDto> comboListRegionalWithNameAndIdWilayah(String wilayah, String regional) {
+		// TODO Auto-generated method stub
+		List<Regional> listObj = groupApprovalHdrRepository.listRegionalWithName(wilayah, regional);
+
+		List<RegionalDto> listDto = new ArrayList<>();
+
+		for (Regional o : listObj) {
+			RegionalDto dto = mapperFacade.map(o, RegionalDto.class);
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public List<CabangDto> comboListCabangWithIdRegional(String regional) {
+		// TODO Auto-generated method stub
+		List<Cabang> listObj = groupApprovalHdrRepository.listCabang(regional);
+
+		List<CabangDto> listDto = new ArrayList<>();
+
+		for (Cabang o : listObj) {
+			CabangDto dto = mapperFacade.map(o, CabangDto.class);
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+	@Override
+	public List<CabangDto> comboListCabangWithNameAndIdRegional(String regional, String cabang) {
+		// TODO Auto-generated method stub
+		List<Cabang> listObj = groupApprovalHdrRepository.listCabangWithName(regional, cabang);
+
+		List<CabangDto> listDto = new ArrayList<>();
+
+		for (Cabang o : listObj) {
+			CabangDto dto = mapperFacade.map(o, CabangDto.class);
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+
+}

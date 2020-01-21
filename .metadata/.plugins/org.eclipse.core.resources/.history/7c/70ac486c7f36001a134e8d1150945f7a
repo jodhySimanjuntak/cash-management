@@ -1,0 +1,34 @@
+
+<zk xmlns:x="xhtml">
+	<window apply="org.zkoss.bind.BindComposer" sclass="content-window" border="normal"
+		contentStyle="overflow:auto;"
+		viewModel="@id('vm') @init('com.mantabs.collection.master.area_assignment.viewmodel.PengajuanDanaVM')">
+		
+					<div>
+						<tabbox style="left: 19.75%; padding-bottom:15px; margin-left: 8px" id="tb" height="auto" width="82%">
+							<tabs>
+								<tab id="tab1"
+									label="Pengajuan" />
+								<tab id="tab2"
+									label="Monitoring" />
+								<tab id="tab3" 
+									label="Pencairan" />								
+							</tabs>
+							<tabpanels>
+								<tabpanel>
+									<include
+										src="/pages/transaksi/PengajuanDana_Create.zul" />
+								</tabpanel>
+								<tabpanel fulfill="tab2.onClick">
+									<include
+										src="/pages/transaksi/PengajuanDana_Monitoring.zul" />
+								</tabpanel>
+								<tabpanel fulfill="tab3.onClick">
+									<include
+										src="/pages/transaksi/PengajuanDana_Pencairan.zul" />
+								</tabpanel>								
+							</tabpanels>
+						</tabbox>
+					</div>
+	</window>
+</zk>

@@ -1,0 +1,243 @@
+<div>
+	<style dynamic="true">
+		.GridLayoutNoBorder tr.z-row td.z-row-inner, tr.z-row .zcell,
+		div.zgrid, .z-grid { border: none; overflow: hidden; zoom: 1;
+		background: white; border-top: none; border-left: none;
+		border-right: none; border-bottom:none; }
+
+	</style>
+	<window width="100%" height="570px" contentStyle="overflow:auto;"
+		viewModel="@id('vm') @init('com.mantabs.collection.master.area_assignment.viewmodel.MasterDataVM')">
+		<hlayout>
+			<vlayout hflex="1">
+				<grid sclass="GridLayoutNoBorder">
+					<columns>
+						<column width="150px" />
+						<column width="300px" />
+					</columns>
+					<rows>
+						<row style="border-bottom:transparent">
+							<label value="Kategori Biaya" />
+							<combobox width="225px"
+								model="@load(vm.listComboKategoriBiayaJB)"
+								selectedItem="@bind(vm.selectedComboKategoriBiayaJB)"
+								readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.kategoriBiaya)"
+										value="@load(data.kodeKategoriBiaya)" />
+								</template>
+							</combobox>
+
+						</row>
+						<row style="border-bottom:transparent">
+							<label value="Sub Kategori" />
+							<combobox width="225px"
+								model="@load(vm.listComboSubKategoriJB)"
+								selectedItem="@bind(vm.selectedComboSubKategoriJB)"
+								readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.subKategori)"
+										value="@load(data.kodeSubKategori)" />
+								</template>
+							</combobox>
+
+						</row>
+						<row style="border-bottom:transparent">
+							<label value="Jenis Biaya" />
+							<textbox width="225px"
+								value="@bind(vm.jenisBiaya)" />
+
+						</row>
+						<row>
+							<label value="Status" />
+							<combobox width="225px"
+								model="@load(vm.listStatusJB)"
+								selectedItem="@bind(vm.selectedStatusJB)" readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.namaParam)" value="@load(data.idParam)" />
+								</template>
+							</combobox>
+						</row>
+
+					</rows>
+				</grid>
+				<separator spacing="10px" />
+
+				<grid sclass="GridLayoutNoBorder">
+					<columns>
+						<column width="150px" />
+						<column width="300px" />
+					</columns>
+					<rows>
+						<row style="border-bottom:transparent">
+							<label />
+							<button iconSclass="z-icon-filter"
+								onClick="@command('filterJB')" autodisable="self" />
+
+						</row>
+
+					</rows>
+				</grid>
+
+				<groupbox>
+					<caption label="Data Master Jenis Biaya " />
+
+					<button iconSclass="z-icon-plus"
+						onClick="@command('addJenisBiaya')" />
+
+					<separator spacing="20px" />
+
+					<listbox mold="paging" pageSize="15" model="@load(vm.listJenisBiaya)"
+						 pagingPosition="bottom">
+						<listhead>
+							<listheader align="center"
+								sort="auto(idCabang)">
+								Kategori Biaya
+							</listheader>
+							<listheader align="center"
+								sort="auto(idCentro)">
+								Sub Kategori
+							</listheader>
+							<listheader align="center"
+								sort="auto(idCentro)">
+								Id Jenis Biaya
+							</listheader>
+							<listheader align="center"
+								sort="auto(idCentro)">
+								Jenis Biaya
+							</listheader>
+							<listheader align="center"
+								sort="auto(jabatan)">
+								Status
+							</listheader>
+
+							<listheader align="center"
+								sort="auto(createdDt)">
+								Aksi
+							</listheader>
+
+						</listhead>
+						<template name="model" var="data">
+							<listitem>
+								<listcell
+									label="@load(data.kategoriBiaya)" />
+								<listcell
+									label="@load(data.subKategori)" />
+								<listcell
+									label="@load(data.kodeJenisBiaya)" />
+								<listcell
+									label="@load(data.jenisBiaya)" />
+								<listcell label="@load(data.status)" />
+								<listcell>
+									<button iconSclass="z-icon-edit"
+										onClick="@command('updateJenisBiaya', dtoEdit = data)" autodisable="self" />
+									<button iconSclass="z-icon-trash"
+										onClick="@command('deleteJenisBiaya', dtoJBDel = data)" autodisable="self" />
+								</listcell>
+							</listitem>
+
+						</template>
+
+					</listbox>
+					
+
+				</groupbox>
+
+
+
+			</vlayout>
+		</hlayout>
+
+		<window width="50%" height="60%" mode="modal" id="subkategori"
+			visible="@load(vm.tab3Detail)" contentStyle="overflow:auto"
+			style="-webkit-box-shadow: 1px 1px 10px 3px #969696;
+			box-shadow: 1px 1px 10px 3px #969696;">
+
+			<separator spacing="5px"></separator>
+
+			<label style="font-weight: bold; font-size:15px"
+				value="Jenis Biaya >> Tambah">
+			</label>
+
+			<separator spacing="15px"></separator>
+
+			<borderlayout height="88%">
+				<center sclass="borderless" autoscroll="true">
+					<div>
+						<grid sclass="GridLayoutNoBorder">
+							<columns>
+								<column width="150px" />
+								<column width="350px" />
+							</columns>
+							<rows>
+								<row>
+									<label value="Kategori Biaya" />
+									<combobox width="225px" value="@bind(vm.kategoriBiayaJBDetail)"
+										onChange="@command('ubahComboSubKategori')"
+										model="@load(vm.listComboKategoriBiayaJBDetail)"
+										selectedItem="@bind(vm.selectedComboKategoriBiayaJBDetail)"
+										readonly="true">
+										<template name="model"
+											var="data">
+											<comboitem
+												label="@load(data.kategoriBiaya)"
+												value="@load(data.kodeKategoriBiaya)" />
+										</template>
+									</combobox>
+								</row>
+								<row>
+									<label value="Sub Kategori " />
+									<combobox width="225px" value="@bind(vm.subKategoriJBDetail)"
+										disabled="@load(vm.selectedComboKategoriBiayaJBDetail.kodeKategoriBiaya eq null ? 'true': 'false')"
+										model="@load(vm.listComboSubKategoriJBDetail)"
+										selectedItem="@bind(vm.selectedComboSubKategoriJBDetail)"
+										readonly="true">
+										<template name="model"
+											var="data">
+											<comboitem
+												label="@load(data.subKategori)"
+												value="@load(data.kodeSubKategori)" />
+										</template>
+									</combobox>
+								</row>
+								<row>
+									<label value="Kode Jenis Biaya " />
+									<textbox width="225px" readonly="true" value="@bind(vm.dtoJB.kodeJenisBiaya)" />
+								</row>
+								<row>
+									<label value="Jenis Biaya " />
+									<textbox width="225px" value="@bind(vm.dtoJB.jenisBiaya)" />
+								</row>
+								<row>
+									<label value="Status" />
+									<radiogroup selectedItem="@bind(vm.statusJB)">
+										<radio label="Aktif" value="1" selected="@load(vm.KBAktifJB)"
+											onClick="" />
+										<radio label="Non Aktif" selected="@load(vm.KBNonAktifJB)"
+											value="0" onClick="" />
+									</radiogroup>
+								</row>
+								<row>
+									<label />
+									<hbox>
+										<button iconSclass="z-icon-save"
+											onClick="@command('saveJenisBiaya')" autodisable="self" />
+										<button iconSclass="z-icon-undo"
+											onClick="@command('batalJenisBiaya')" autodisable="self" />
+									</hbox>
+								</row>
+							</rows>
+						</grid>
+					</div>
+				</center>
+
+			</borderlayout>
+
+
+		</window>
+	</window>
+
+</div>

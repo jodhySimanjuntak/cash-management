@@ -1,0 +1,416 @@
+<zk>
+	<style dynamic="true">
+		.GridLayoutNoBorder tr.z-row td.z-row-inner, tr.z-row .zcell,
+		div.zgrid, .z-grid { border: none; overflow: hidden; zoom: 1;
+		background: white; border-top: none; border-left: none;
+		border-right: none; border-bottom:none; } .windowStyle
+		.z-window-embedded-cnt, .z-window-embedded-body,
+		.z-window-overlapped-body, .z-window-popup-body,
+		.z-window-highlighted-body, .z-window-modal-body{ overflow:auto;
+		}
+
+		.GroupBoxNew .z-groupbox-content { font-size: 12px; padding:
+		5px; overflow-x: scroll; padding-right: 5px}
+
+	</style>
+	<div style="background:white;" apply="org.zkoss.bind.BindComposer"
+		xmlns:w="client"
+		viewModel="@id('vm') @init('com.mantabs.collection.master.area_assignment.viewmodel.MasterApprovalVM') 
+		 @load(vm.dto) @save(vm.dto, before='saveGroupApproval')">
+		<div visible="@load(vm.groupApprovalAreaWindow)">
+			<vlayout hflex="1">
+				<grid style="margin-top: 10px; margin-bottom:10px"
+					sclass="GridLayoutNoBorder">
+					<columns>
+						<column width="150px" />
+						<column width="450px" />
+					</columns>
+					<rows>
+						<row style="border-bottom:transparent">
+							<label value="Inisiator" />
+							<combobox width="392px"
+								onChange="@command('ubahInisiator')"
+								model="@load(vm.listComboInisiatorAA)"
+								selectedItem="@bind(vm.selectedComboInisiatorAA)"
+								readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.namaParam)" value="@load(data.idParam)" />
+								</template>
+							</combobox>
+
+						</row>
+						<row style="border-bottom:transparent">
+							<label value="Group Approval" />
+							<combobox width="392px"
+								onChange="@command('ubahGroupApprovalAA')"
+								model="@load(vm.listComboGroupApprovalAA)"
+								disabled="@load(vm.selectedComboInisiatorAA.idParam eq null ? 'true': 'false')"
+								selectedItem="@bind(vm.selectedComboGroupApprovalAA)"
+								readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.groupApproval)"
+										value="@load(data.kodeGroupApproval)" />
+								</template>
+							</combobox>
+
+						</row>
+						<row style="border-bottom:transparent">
+							<label value="Kategori Biaya" />
+							<combobox width="392px" disabled="true"
+								value="@bind(vm.kategoriBiayaAA)"
+								model="@load(vm.listComboKategoriBiayaAA)"
+								selectedItem="@bind(vm.selectedComboKategoriBiayaAA)"
+								readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.kategoriBiaya)"
+										value="@load(data.kodeKategoriBiaya)" />
+								</template>
+							</combobox>
+
+						</row>
+						<row style="border-bottom:transparent">
+							<label value="Sub Kategori" />
+							<combobox width="392px" disabled="true"
+								value="@bind(vm.subKategoriAA)"
+								model="@load(vm.listComboSubKategoriAA)"
+								selectedItem="@bind(vm.selectedComboSubKategoriAA)"
+								readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.subKategori)"
+										value="@load(data.kodeSubKategori)" />
+								</template>
+							</combobox>
+
+						</row>
+						<row style="border-bottom:transparent">
+							<label value="Jenis Biaya" />
+							<combobox width="392px" disabled="true"
+								value="@bind(vm.jenisBiayaAA)"
+								model="@load(vm.listComboJenisBiayaAA)"
+								selectedItem="@bind(vm.selectedComboJenisBiayaAA)"
+								readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.jenisBiaya)"
+										value="@load(data.kodeJenisBiaya)" />
+								</template>
+							</combobox>
+
+						</row>
+
+						<row style="border-bottom:transparent">
+							<label value="Status" />
+							<combobox width="392px"
+								model="@load(vm.listComboStatusAA)"
+								selectedItem="@bind(vm.selectedComboStatusAA)"
+								readonly="true">
+								<template name="model" var="data">
+									<comboitem
+										label="@load(data.namaParam)" value="@load(data.idParam)" />
+								</template>
+							</combobox>
+
+						</row>
+
+
+						<row style="border-bottom:transparent">
+							<label value="Cabang" />
+							<combobox width="392px" value="" />
+
+						</row>
+
+					</rows>
+				</grid>
+				<separator spacing="10px" />
+
+				<grid sclass="GridLayoutNoBorder">
+					<columns>
+						<column width="150px" />
+						<column width="450px" />
+					</columns>
+					<rows>
+						<row style="border-bottom:transparent">
+							<label />
+							<hlayout>
+								<button iconSclass="z-icon-filter"
+									onClick="@command('filterAA')" autodisable="self" />
+								<button iconSclass="z-icon-refresh"
+									onClick="@command('')" autodisable="self" />
+							</hlayout>
+						</row>
+
+					</rows>
+				</grid>
+
+				<groupbox style="margin-bottom: 20px; margin-right:5px"
+					sclass="GroupBoxNew" height="auto">
+					<caption label="Data Master Area Approval" />
+
+					<button iconSclass="z-icon-plus"
+						onClick="@command('addGroupAreaApproval')" />
+
+					<separator style="height:10px !important" />
+
+					<listbox style="overflow-x: scroll">
+						<listhead>
+							<listheader align="center"
+								sort="auto(kodeKategoriBiaya)">
+								Group Approval
+							</listheader>
+							<listheader align="center"
+								sort="auto(kategoriBiaya)">
+								Kategori Biaya
+							</listheader>
+							<listheader align="center"
+								sort="auto(kategoriBiaya)">
+								Tanggal Buat
+							</listheader>
+							<listheader align="center"
+								sort="auto(kategoriBiaya)">
+								Inisiator
+							</listheader>
+							<listheader align="center"
+								sort="auto(kategoriBiaya)">
+								Tingkatan Jabatan
+							</listheader>
+							<listheader align="center"
+								sort="auto(kategoriBiaya)">
+								Range Pengajuan
+							</listheader>
+							<listheader align="center"
+								sort="auto(kategoriBiaya)">
+								Level
+							</listheader>
+							<listheader align="center"
+								sort="auto(kategoriBiaya)">
+								Total Cabang
+							</listheader>
+							<listheader align="center"
+								sort="auto(status)">
+								Status
+							</listheader>
+
+							<listheader align="center">Aksi</listheader>
+
+						</listhead>
+
+						<listitem>
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell>
+								<button iconSclass="z-icon-edit"
+									onClick="@command('')" autodisable="self" />
+								<button iconSclass="z-icon-trash"
+									onClick="@command('') " autodisable="self" />
+							</listcell>
+						</listitem>
+					</listbox>
+
+					<div width="98%">
+						<hbox style="width:100%;height:50%">
+							<div align="left"
+								style="margin:1px;width:auto;">
+
+								<button onClick="@command('firstPage')"
+									disabled="@load(vm.flagMinPage)" iconSclass="z-icon-backward"
+									sclass="hc-paging" />
+								<button sclass="hc-paging"
+									onClick="@command('prevPage')" disabled="@load(vm.flagMinPage)"
+									iconSclass="z-icon-arrow-left" />
+								<intbox value="@bind(vm.pageNumber)"
+									onOK="@command('searchPage')" style="width:15%;height:30%;" />
+								<label value="/" />
+								<label value="@load(vm.totalPage)" />
+								<button onClick="@command('nextPage')"
+									disabled="@load(vm.flagMaxPage)"
+									iconSclass="z-icon-arrow-right" sclass="hc-paging" />
+								<button onClick="@command('lastPage')"
+									disabled="@load(vm.flagMaxPage)" iconSclass="z-icon-forward"
+									sclass="hc-paging" />
+								<!-- </div> -->
+							</div>
+						</hbox>
+					</div>
+
+				</groupbox>
+
+
+
+			</vlayout>
+
+		</div>
+
+		<div width="70%" height="auto" id="groupApproval"
+			visible="@load(vm.tabGroupApprovalArea)"
+			style="-webkit-box-shadow: 1px 1px 10px 3px #969696; padding-top:10px; padding-left: 10px;
+			box-shadow: 1px 1px 10px 3px #969696 ; margin-left: 200px; margin-bottom:20px ">
+
+			<separator spacing="5px"></separator>
+
+			<label style="font-weight: bold; font-size:15px"
+				value="Area Approval >> Tambah">
+			</label>
+
+			<separator
+				style="height: 1px !important; margin-right: 10px" bar="true">
+			</separator>
+
+
+			<div style="overflow-y:scroll;">
+				<grid sclass="GridLayoutNoBorder">
+					<columns>
+						<column width="150px" />
+						<column width="300px" />
+						<column width="250px" />
+					</columns>
+					<rows>
+						<row>
+							<label value="Inisiator" />
+							<combobox width="292px" value=""
+								readonly="true" />
+						</row>
+						<row>
+							<label value="Group Approval" />
+							<combobox width="292px" value=""
+								readonly="true" />
+						</row>
+						<row>
+							<label value="Kategori Biaya" />
+							<combobox width="292px" readonly="true" />
+						</row>
+						<row>
+							<label value="Sub Kategori" />
+							<combobox width="292px" readonly="true" />
+						</row>
+						<row>
+							<label value="Jenis Biaya" />
+							<combobox width="292px" readonly="true" />
+						</row>
+						<row>
+							<label value="Budget" />
+							<combobox width="292px" readonly="true" />
+						</row>
+						<row>
+							<label value="Range Pengajuan" />
+
+							<hbox>
+								<decimalbox width="130px" />
+								<label
+									style="margin-left:6px; margin-right:4px" value="s/d">
+								</label>
+								<decimalbox width="130px" />
+							</hbox>
+
+						</row>
+
+						<row>
+							<label value="Level" />
+							<textbox width="292px" />
+						</row>
+
+					</rows>
+				</grid>
+
+				<hlayout style="margin-top: 25px;">
+
+					<groupbox
+						style="margin-bottom: 20px; margin-right:5px" sclass="GroupBoxNew"
+						height="auto">
+
+						<caption label="Cabang yang belum di mapping"></caption>
+
+						<listbox mold="paging" pageSize="15"
+							height="100px" width="250px" multiple="true" checkmark="true"
+							style="margin-left:10px;overflow:auto" pagingPosition="bottom">
+							<listhead>
+								<listheader width="50px"></listheader>
+								<listheader align="center" sort="">
+									Jabatan
+								</listheader>
+
+
+							</listhead>
+							<template name="model"></template>
+							<listitem>
+								<listcell></listcell>
+								<listcell label="Test"></listcell>
+							</listitem>
+						</listbox>
+
+
+					</groupbox>
+
+					<vbox style="margin-top:60px">
+
+						<button iconSclass="z-icon-angle-double-right"
+							onClick="@command('')" autodisable="self" />
+
+						<button iconSclass="z-icon-angle-double-left"
+							onClick="@command('')" autodisable="self" />
+
+					</vbox>
+
+					<groupbox style="margin-right:5px">
+
+						<caption label="Cabang yang sudah dimapping"></caption>
+
+						<listbox mold="paging" pageSize="15"
+							height="100px" width="250px" multiple="true" checkmark="true"
+							style="margin-left:10px;overflow:auto" pagingPosition="bottom">
+							<listhead>
+								<listheader width="50px"></listheader>
+								<listheader align="center" sort="">
+									Jabatan
+								</listheader>
+
+
+							</listhead>
+							<template name="model"></template>
+							<listitem>
+								<listcell></listcell>
+								<listcell label="Test"></listcell>
+							</listitem>
+						</listbox>
+
+					</groupbox>
+
+
+
+
+				</hlayout>
+
+
+
+
+				<hbox
+					style="margin-top:5px; margin-left:10px; margin-bottom: 20px">
+					<button iconSclass="z-icon-save"
+						onClick="@command('saveGroupAreaApproval')" autodisable="self" />
+					<button iconSclass="z-icon-undo"
+						onClick="@command('batalGroupAreaApproval')" autodisable="self" />
+				</hbox>
+
+
+			</div>
+
+
+		</div>
+
+
+
+		<!-- <include src="/pages/msgDelete.zul" />
+			<include src="/pages/msgSuccessDelete.zul" />
+			<include src="/pages/msgFree.zul" /> -->
+	</div>
+</zk>

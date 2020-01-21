@@ -1,0 +1,69 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>common-db</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<parent>
+		<artifactId>mantabs-project</artifactId>
+		<groupId>com.mantabs</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<dependencies>
+		<!-- Specific dependency is allowed to be defined here -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.5</version>
+		</dependency>
+
+		<!-- Mandala Common -->
+		<dependency>
+			<groupId>com.mantabs</groupId>
+			<artifactId>common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>mulesoft-releases</id>
+			<name>MuleSoft Repository</name>
+			<url>http://repository.mulesoft.org/releases/</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>mulesoft-snapshots</id>
+			<name>MuleSoft Snapshot Repository</name>
+			<url>http://repository.mulesoft.org/snapshots/</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+
+	<build>
+		<!-- This will be the context root and the WAR file name for Application 
+			Server deployment -->
+		<plugins>
+			<!--Plugin for query-dsl -->
+			<plugin>
+				<groupId>com.mysema.maven</groupId>
+				<artifactId>apt-maven-plugin</artifactId>
+				<version>1.1.3</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/generated-sources/java</outputDirectory>
+							<processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

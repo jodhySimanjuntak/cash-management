@@ -1,0 +1,50 @@
+<zk>
+	<borderlayout hflex="1" vflex="1">
+		<north style="background-color: ghostwhite; height: 50px;"
+			border="none" sclass="head">
+			<include src="/pages/banner.zul"></include>
+		</north>
+		<west maxsize="600" size="20%" flex="true" border="0"
+					splittable="true" collapsible="true" autoscroll="true"
+			style="background-color: ghostwhite; margin-top: 50px">
+			<include src="/pages/sidebar.zul" width="auto"
+				sclass="hc-sidemenu-wrapper">
+			</include>
+		</west>
+		<center id="mainContent" autoscroll="true"
+			style="margin-left:5px; border:none;">
+			<iframe self="@insert(mainContent)"
+				sclass="hc-content-wrapper">
+			</iframe>
+		</center>
+
+	</borderlayout>
+
+
+</zk>
+
+<!-- <zk>
+	<borderlayout hflex="1" vflex="1">
+		<north style="background-color: ghostwhite; height: 50px;"
+			border="none" sclass="head">
+			<include src="/pages/banner.zul"></include>
+		</north>
+		<center border="0">
+			<borderlayout>
+				<west maxsize="600" size="19.75%" flex="true" border="0"
+					splittable="true">
+					<include src="/pages/sidebar.zul"
+						sclass="hc-sidemenu-wrapper">
+					</include>
+				</west>
+				<center>
+					<div self="@insert(mainContent)"
+						sclass="hc-content-wrapper">
+					</div>
+				</center>
+			</borderlayout>
+		</center>
+
+	</borderlayout>
+
+</zk> -->

@@ -1,0 +1,5 @@
+package com.mantabs.entity.master;
+
+public class Wilayah {
+
+}

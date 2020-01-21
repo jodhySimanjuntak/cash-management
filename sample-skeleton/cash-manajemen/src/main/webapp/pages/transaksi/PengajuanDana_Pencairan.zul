@@ -1,0 +1,200 @@
+<div>
+	<style dynamic="true">
+		.GridLayoutNoBorder tr.z-row td.z-row-inner, tr.z-row .zcell,
+		div.zgrid, .z-grid { border: none; overflow: hidden; zoom: 1;
+		background: white; border-top: none; border-left: none;
+		border-right: none; border-bottom:none; }
+
+	</style>
+
+	<div style="background:white;" apply="org.zkoss.bind.BindComposer"
+		xmlns:w="client"
+		viewModel="@id('vm') @init('com.mantabs.collection.master.area_assignment.viewmodel.PengajuanDanaVM')">
+		<div>
+			<vlayout hflex="1">
+				<grid sclass="GridLayoutNoBorder">
+					<columns>
+						<column width="8%" />
+						<column width="17%" />
+						<column width="15%" />
+						<column width="26%" />
+						<column width="1%" />
+						<column width="13%" />
+						<column width="20%" />
+					</columns>
+					<rows>
+						<row style="border-bottom:transparent">
+							<label value="HO" />
+							<combobox width="100%" value="" />
+							<label value="Kategori Biaya" />
+							<combobox width="100%" value="" />
+							<label />
+							<label value="Bank Account Num" />
+							<textbox width="100%" readonly="true"
+								value="" />
+						</row>
+						<row style="border-bottom:transparent">
+							<label value="Wilayah" />
+							<combobox width="100%" value="" />
+							<label value="Jenis Biaya" />
+							<combobox width="100%" value="" />
+							<label />
+							<label value="Bank Account Name" />
+							<textbox width="100%" readonly="true"
+								value="" />
+						</row>
+						<row style="border-bottom:transparent">
+							<label value="Regional" />
+							<combobox width="100%" value="" />
+							<label value="Tanggal Pengajuan" />
+							<hbox>
+								<datebox width="120px" />
+								<label value="-" />
+								<datebox width="120px" />
+							</hbox>
+							<label />
+							<label value="Saldo Bank" />
+							<decimalbox width="100%" readonly="true" />
+						</row>
+						<row style="border-bottom:transparent">
+							<label value="Centro" />
+							<combobox width="100%" value="" />
+							<label value="Status Persetujuan" />
+							<combobox width="100%" value="" />
+						</row>
+						<row style="border-bottom:transparent">
+							<label value="Cabang" />
+							<combobox width="100%" value="" />
+							<label></label>
+							<button iconSclass="z-icon-filter"
+								onClick="@command('back')" autodisable="self" />
+						</row>
+						<row style="border-bottom:transparent">
+							<label></label>
+							<label></label>
+							<label></label>
+							<label></label>
+							<label></label>
+							<label></label>
+							<hbox>
+								<button label="Mutasi Bank"
+									onClick="@command('mutasi')" autodisable="self" />
+								<button label="Inquiry Saldo "
+									onClick="@command('inquiry')" autodisable="self" />
+							</hbox>
+
+						</row>
+					</rows>
+				</grid>
+				<separator spacing="50px" bar="true" />
+
+				<grid sclass="GridLayoutNoBorder">
+					<columns>
+						<column width="8%" />
+						<column width="12%" />
+						<column width="5%" />
+						<column width="13%" />
+						<column width="25%" />
+						<column width="15%" />
+						<column width="22%" />
+					</columns>
+					<rows>
+						<row style="border-bottom:transparent">
+							<label></label>
+							<label></label>
+							<label></label>
+							<label value="Nama Bank Tujuan" />
+							<combobox width="80%" value="" />
+							<label value="Nama Bank Bayar" />
+							<combobox width="80%" value="" />
+						</row>
+					</rows>
+				</grid>
+
+				<separator spacing="5px" />
+
+				<groupbox style="padding-left:10px">
+					<caption label="Hasil Pencarian Data Aplikasi" />
+
+					<listbox mold="paging" pageSize="15"  pagingPosition="bottom">
+						<listhead>
+							<listheader align="center"
+								sort="auto(idCentro)">
+								Nama Bank
+							</listheader>
+							<listheader align="center"
+								sort="auto(idCabang)">
+								No. Rek
+							</listheader>
+							<listheader align="center"
+								sort="auto(jabatan)">
+								Nama Rekening
+							</listheader>
+							<listheader align="center"
+								sort="auto(nama)">
+								Cabang
+							</listheader>
+							<listheader align="center"
+								sort="auto(namaPortofolio)">
+								Tanggal Pengajuan
+							</listheader>
+							<listheader align="center"
+								sort="auto(namaPortofolio)">
+								Tanggal Complete Persetujuan
+							</listheader>
+							<listheader align="center"
+								sort="auto(namaPortofolio)">
+								Type Transfer
+							</listheader>
+							<listheader align="center"
+								sort="auto(namaPortofolio)">
+								Nilai Pencairan
+							</listheader>
+							<listheader align="center"
+								sort="auto(namaPortofolio)">
+								Biaya Adm
+							</listheader>
+							<listheader align="center"
+								sort="auto(namaPortofolio)">
+								Total Bayar
+							</listheader>
+							<listheader align="center"
+								sort="auto(namaPortofolio)">
+								Tanggal Transfer
+							</listheader>
+							<listheader align="center"
+								sort="auto(createdDt)">
+								Aksi
+							</listheader>
+
+						</listhead>
+						<listitem>
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell label="" />
+							<listcell>
+								<button iconSclass="z-icon-trash"
+									onClick="@command('delete')" autodisable="self" />
+							</listcell>
+						</listitem>
+					</listbox>
+
+				</groupbox>
+
+
+
+
+
+			</vlayout>
+		</div>
+	</div>
+
+</div>

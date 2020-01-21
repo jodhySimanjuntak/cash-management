@@ -1,0 +1,212 @@
+package com.mantabs.collection.master.area_assignment.dto;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+
+public class GroupApprovalHdrDto {
+	
+	private String kodeGroupApproval;
+	private String kategoriBiaya;
+	private String kodeKategoriBiaya;
+	private String kodeSubKategori;
+	private String subKategori;
+	private String kodeJenisBiaya;
+	private String jenisBiaya;
+	private String groupApproval;
+	private String kodeBudget;
+	private String budget;
+	private String inisiator;
+	private String kodeInisiator;
+	private String tingkatJabatan;
+	private String kodeTingkatJabatan;
+	private BigDecimal startRangePengajuan;
+	private BigDecimal endRangePengajuan;
+	private String status;
+	private String createdBy;
+	private Date createdDt;
+	private Date endDate;
+	private String modifiedBy;
+	private Date modofiedDt;
+	private String rangePengajuan;
+	private String level;
+	private String branchId;
+	private String namaCabang;
+	
+	private List<GroupApprovalDtlDto> groupApprovalDtlDtos = new ArrayList<>();
+	private GroupApprovalDtlDto groupApprovalDtlDto = new GroupApprovalDtlDto();
+	
+	public String getKodeGroupApproval() {
+		return kodeGroupApproval;
+	}
+	public void setKodeGroupApproval(String kodeGroupApproval) {
+		this.kodeGroupApproval = kodeGroupApproval;
+	}
+	public String getKategoriBiaya() {
+		return kategoriBiaya;
+	}
+	public void setKategoriBiaya(String kategoriBiaya) {
+		this.kategoriBiaya = kategoriBiaya;
+	}
+	public String getKodeKategoriBiaya() {
+		return kodeKategoriBiaya;
+	}
+	public void setKodeKategoriBiaya(String kodeKategoriBiaya) {
+		this.kodeKategoriBiaya = kodeKategoriBiaya;
+	}
+	public String getGroupApproval() {
+		return groupApproval;
+	}
+	public void setGroupApproval(String groupApproval) {
+		this.groupApproval = groupApproval;
+	}
+	public String getBudget() {
+		return budget;
+	}
+	public void setBudget(String budget) {
+		this.budget = budget;
+	}
+	public String getInisiator() {
+		return inisiator;
+	}
+	public void setInisiator(String inisiator) {
+		this.inisiator = inisiator;
+	}
+	public String getTingkatJabatan() {
+		return tingkatJabatan;
+	}
+	public void setTingkatJabatan(String tingkatJabatan) {
+		this.tingkatJabatan = tingkatJabatan;
+	}
+	public String getKodeTingkatJabatan() {
+		return kodeTingkatJabatan;
+	}
+	public void setKodeTingkatJabatan(String kodeTingkatJabatan) {
+		this.kodeTingkatJabatan = kodeTingkatJabatan;
+	}
+	public BigDecimal getStartRangePengajuan() {
+		return startRangePengajuan;
+	}
+	public void setStartRangePengajuan(BigDecimal startRangePengajuan) {
+		this.startRangePengajuan = startRangePengajuan;
+	}
+	public BigDecimal getEndRangePengajuan() {
+		return endRangePengajuan;
+	}
+	public void setEndRangePengajuan(BigDecimal endRangePengajuan) {
+		this.endRangePengajuan = endRangePengajuan;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public Date getCreatedDt() {
+		return createdDt;
+	}
+	public void setCreatedDt(Date createdDt) {
+		this.createdDt = createdDt;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+	public Date getModofiedDt() {
+		return modofiedDt;
+	}
+	public void setModofiedDt(Date modofiedDt) {
+		this.modofiedDt = modofiedDt;
+	}
+	public List<GroupApprovalDtlDto> getGroupApprovalDtlDtos() {
+		return groupApprovalDtlDtos;
+	}
+	public void setGroupApprovalDtlDtos(List<GroupApprovalDtlDto> groupApprovalDtlDtos) {
+		this.groupApprovalDtlDtos = groupApprovalDtlDtos;
+	}
+	public GroupApprovalDtlDto getGroupApprovalDtlDto() {
+		return groupApprovalDtlDto;
+	}
+	public void setGroupApprovalDtlDto(GroupApprovalDtlDto groupApprovalDtlDto) {
+		this.groupApprovalDtlDto = groupApprovalDtlDto;
+	}
+	public String getKodeSubKategori() {
+		return kodeSubKategori;
+	}
+	public void setKodeSubKategori(String kodeSubKategori) {
+		this.kodeSubKategori = kodeSubKategori;
+	}
+	public String getSubKategori() {
+		return subKategori;
+	}
+	public void setSubKategori(String subKategori) {
+		this.subKategori = subKategori;
+	}
+	public String getKodeJenisBiaya() {
+		return kodeJenisBiaya;
+	}
+	public void setKodeJenisBiaya(String kodeJenisBiaya) {
+		this.kodeJenisBiaya = kodeJenisBiaya;
+	}
+	public String getJenisBiaya() {
+		return jenisBiaya;
+	}
+	public void setJenisBiaya(String jenisBiaya) {
+		this.jenisBiaya = jenisBiaya;
+	}
+	public String getKodeBudget() {
+		return kodeBudget;
+	}
+	public void setKodeBudget(String kodeBudget) {
+		this.kodeBudget = kodeBudget;
+	}
+	public String getKodeInisiator() {
+		return kodeInisiator;
+	}
+	public void setKodeInisiator(String kodeInisiator) {
+		this.kodeInisiator = kodeInisiator;
+	}
+	public String getRangePengajuan() {
+		return rangePengajuan;
+	}
+	public void setRangePengajuan(String rangePengajuan) {
+		this.rangePengajuan = rangePengajuan;
+	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
+	}
+	public String getBranchId() {
+		return branchId;
+	}
+	public void setBranchId(String branchId) {
+		this.branchId = branchId;
+	}
+	public String getNamaCabang() {
+		return namaCabang;
+	}
+	public void setNamaCabang(String namaCabang) {
+		this.namaCabang = namaCabang;
+	}
+	
+	
+	
+}

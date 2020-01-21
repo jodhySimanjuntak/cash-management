@@ -1,0 +1,30 @@
+package com.mantabs.entity.master;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "MMF_MST_REGIONAL")
+public class Regional implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@Column(name = "ID_REGIONAL")
+	private String idRegional;
+	
+	@Column(name = "NAMA_REGIONAL")
+	private String namaRegional;
+	
+	@Column(name = "PIC_REG_MKT")
+	private String picRegMkt;
+	
+	@Column(name = "PIC_REG_OPT")
+	private String picRegOpt;
+	
+
+}

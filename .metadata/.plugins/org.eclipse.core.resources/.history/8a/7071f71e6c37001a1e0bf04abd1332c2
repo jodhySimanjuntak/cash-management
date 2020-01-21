@@ -1,0 +1,21 @@
+package com.mantabs.collection.master.area_assignment.dto;
+
+import java.util.Date;
+
+
+public class RegionalDto {
+	
+	private String idRegional;
+	private String namaRegional;
+	private String picRegMkt;
+	private String picRegOpt;
+	private Integer status;
+	private Date createdDt;
+	private String createdBy;
+	private Date modifiedDt;
+	private String modifiedBy;
+	private Date endDt;
+	private String idKaryawan;
+	private String idWilayah;
+	
+}

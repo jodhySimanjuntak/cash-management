@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TITLE PAGE -->
+<?page title="PT MANDALA MULTIFINANCE" contentType="text/html;charset=UTF-8" automaticTimeout="false"?>
+<?init class="com.mantabs.collection.master.area_assignment.viewmodel.AuthCheckerVmd"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/pages/template.zul"?>
+<?link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" ?>
+<?script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous" ?>
+<?script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous" ?>
+<?script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" ?>
+<?link rel="stylesheet" href="css/main_header.css"?> 
+<?link rel="stylesheet" href="css/main_sidemenu.css"?>
+<?link rel="stylesheet" href="css/main_table.css"?> 
+<?link rel="stylesheet" type="text/css" href="/css/main-style.css" ?>
+<?link rel="icon" href="/images/logo_mandala.png" type="image/x-icon" ?>
+
+<zk>
+	<div>
+		<include id="mainInclude" mode="instant" self="@define(mainContent)"
+		apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.mantabs.collection.master.area_assignment.viewmodel.NavigationVM')"
+		src="@bind(vm.includeSrc)">
+		</include>
+	</div>
+	
+	<script src="/js/script.js"></script>
+	<script>
+	window.scrollTo({ top: 0, behavior: 'smooth'});
+	</script>
+</zk>

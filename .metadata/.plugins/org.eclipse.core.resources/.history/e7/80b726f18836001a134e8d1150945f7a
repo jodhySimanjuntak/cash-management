@@ -1,0 +1,22 @@
+<window visible="@load(vm.flagMsgDataSudahAda)" mode="modal"
+	position="center,center" style="width: 320px;" closable="true">
+	<div style="width: 320px;
+	padding: 20px 30px;">
+		<div
+			style="display: flex;
+	justify-content: center;
+	padding-bottom: 20px;">
+			<button label="!"
+			style="width:70px;height:70px;background:#2baabc;border:none; 
+			color: white; font-size: 42px;border-radius: 50%;"/>
+		</div>
+		<div sclass="warn-text">
+			<label value="Data Sudah Ada" />
+		</div>
+		<div sclass="btn-wrapper d-flex space-between ai-center"
+			style="margin-left: 35%;">
+			<button label="OK" onClick="@command('OK')"
+				sclass="submitmodal-btn" />
+		</div>
+	</div>
+</window>

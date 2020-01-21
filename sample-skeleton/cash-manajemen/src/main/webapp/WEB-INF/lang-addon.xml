@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language-addon>
+    <addon-name>customComponentAddon</addon-name>
+    <language-name>xul/html</language-name>
+    
+<!-- 	BARU -->
+    <component>
+<!--     customComboBoxSoloParamValue -->
+        <component-name>comboBoxParamValue</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.ComboBoxSoloParamValueMMFVM</component-class>
+    </component>
+    
+    <component>
+<!--     customBandBoxSoloKaryawan -->
+        <component-name>bandBoxKaryawan</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxSoloKaryawanMMFVM</component-class>
+    </component>
+
+    <component>
+<!--     customBandBoxSoloKelurahanKolektor -->
+        <component-name>bandBoxKelurahanKolektor</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxSoloKelurahanKolektorMMFVM</component-class>
+    </component>
+
+    <component>
+<!--     customBandBoxSoloNamaKriteriaTagih -->
+        <component-name>bandBoxKriteriaTagih</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxSoloNamaKriteriaTagihVM</component-class>
+    </component>
+
+    <component>
+<!--     customBandBoxFullWilayahHierarchy -->
+        <component-name>bandBox_4_WilayahRegionalCentroCabang</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxHierarchyWilayahPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>bandBox_3_WilayahRegionalCentro</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxHierarchyTrioWilayahPackageMMFVM</component-class>
+    </component>
+    
+    <component>
+        <component-name>bandBox_2_WilayahRegional</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxHierarchyDuoWilayahPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>bandBoxWilayah</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxSoloWilayahPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>bandBoxRegional</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxSoloRegionalPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>bandBoxCentro</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxSoloCentroPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>bandBoxCabang</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxSoloCabangPackageMMFVM</component-class>
+    </component>
+
+    <component>
+<!--     customBandBoxFullProvinsiHierarchy -->
+        <component-name>bandBox_4_ProvinsiKotaKecamatanKelurahan</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxHierarchyProvinsiPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>bandBox_3_ProvinsiKotaKecamatan</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxHierarchyTrioProvinsiPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>bandBox_2_ProvinsiKota</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxHierarchyDuoProvinsiPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>bandBoxProvinsi</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxSoloProvinsiPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>bandBoxKota</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxSoloKotaPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>bandBoxKecamatan</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxSoloKecamatanPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>bandBoxKelurahan</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxSoloKelurahanPackageMMFVM</component-class>
+    </component>
+
+    <component>
+<!--     customComboBoxDuoPenyimpananHierarchy -->
+        <component-name>comboBox_2_PenyimpananDeskripsi</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.ComboBoxHierarchyDuoPenyimpananPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>comboBox_4_PortofolioKategoriProdukJenisProdukSubProduk</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.ComboBoxHierarchyPortofolioPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>comboBox_3_PortofolioKategoriProdukJenisProduk</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.ComboBoxHierarchyTrioPortofolioPackageMMFVM</component-class>
+    </component>
+
+    <component>
+<!--     customComboBoxDuoPortofolioHierarchy -->
+        <component-name>comboBox_2_PortofolioKategoriProduk</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.ComboBoxHierarchyDuoPortofolioPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>comboBoxPortofolio</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.ComboBoxSoloPortofolioMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>comboBoxKategoriProduk</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.ComboBoxSoloKategoriProdukMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>comboBoxJenisProduk</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.ComboBoxSoloJenisProdukMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>comboBoxSubProduk</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.ComboBoxSoloSubProdukMMFVM</component-class>
+    </component>
+
+    <component>
+<!--     customBandBoxDuoJabatanKaryawanHierarchy -->
+        <component-name>bandBox_2_JabatanKaryawan</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxHierarchyDuoJabatanKaryawanPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>bandBox_3_JabatanRadioKaryawan</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxHierarchyJabatanRadioKaryawanPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>bandBox_5_WilayahKonsumen</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxHierarchyWilayahKonsumenPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>bandBox_6_WilayahKonsumenRadio</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxHierarchyWilayahKonsumenRadioPackageMMFVM</component-class>
+    </component>
+
+    <component>
+        <component-name>bandBoxKonsumen</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxTextBoxSoloKonsumenMMFVM</component-class>
+    </component>
+
+<!-- 	BARU -->
+    
+    <component>
+        <component-name>customButton</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.ButtonIconVM</component-class>
+    </component>
+    
+    <component>
+        <component-name>customBandBox</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.BandBoxVM</component-class>
+    </component>
+
+    <component>
+        <component-name>customComboBox</component-name>
+        <component-class>com.mantabs.util.viewmodel.components.ComboBoxVM</component-class>
+    </component>
+</language-addon>

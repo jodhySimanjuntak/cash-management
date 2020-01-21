@@ -1,0 +1,12 @@
+package com.mantabs.entity.master;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "MMF_MST_CABANG")
+public class Cabang {
+
+	private static final long serialVersionUID = 1L;
+
+}

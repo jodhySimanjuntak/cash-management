@@ -1,0 +1,49 @@
+package com.mantabs.collection.master.area_assignment.dto;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+
+public class CabangDto {
+	
+	private String idCabang;
+	private String namaCabang;
+	private String kelasCabang;
+	private String alamat;
+	private String rt;
+	private String rw;
+	private String kodeAreaTelp1;
+	private String noTelp1;
+	private String kodeAreaTelp2;
+	private String noTelp2;
+	private String kodeAreaTelp3;
+	private String noTelp3;
+	private String kodeAreaFax;
+	private String noFax;
+	private String noHp;
+	private BigDecimal plafonPettyCash;
+	private BigDecimal batasMaxPettyCash;
+	private BigDecimal sisaPettyCash;
+	private BigDecimal nilaiKpm;
+	private String noCoa;
+	private String waktuLocal;
+	private Integer status;
+	private Date createdDt;
+	private String createdBy;
+	private Date modifiedDt;
+	private String modifiedBy;
+	private Date endDt;
+	private String idKategoriProduk;
+	private String idPortofolio;
+	private String idProvinsi;
+	private String idKota;
+	private String idKecamatan;
+	private String idKelurahan;
+	private String idRegional;
+	private String idCentro;
+	private String idWilayah;
+	private Integer masaRequest;
+	private BigDecimal bufferCash;
+	private String idCetro;
+
+}

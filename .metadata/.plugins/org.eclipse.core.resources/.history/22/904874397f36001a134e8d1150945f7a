@@ -1,0 +1,40 @@
+<zk xmlns:x="xhtml">
+
+	<style>
+		.windowStyle .z-window-embedded-cnt, .z-window-embedded-body,
+		.z-window-overlapped-body, .z-window-popup-body,
+		.z-window-highlighted-body, .z-window-modal-body{ overflow:auto;
+		}
+
+
+	</style>
+
+	<window apply="org.zkoss.bind.BindComposer" sclass="content-window" title="Master Approval"
+		style="text-align: center"
+		border="normal" contentStyle="overflow:auto;"
+		viewModel="@id('vm') @init('com.mantabs.collection.master.area_assignment.viewmodel.MasterApprovalVM')">
+
+		<div height="100%">
+			<tabbox style="margin-left: 8px" id="tb"
+				height="auto" width="100%">
+				<tabs>
+					<tab onFulfill="@command('refresGridGroupApproval')"
+						onClick="@command('refresGridGroupApproval')" id="tab1"
+						label="Grup Approval" />
+					<tab id="tab2" label="Area Approval" />
+				</tabs>
+				<tabpanels>
+					<tabpanel
+						onClick="@command('refresGridGroupApproval')" height="auto">
+						<include
+							src="/pages/master/MasterApproval_GrupApproval.zul" />
+					</tabpanel>
+					<tabpanel height="auto" fulfill="tab2.onClick">
+						<include
+							src="/pages/master/MasterApproval_AreaApproval.zul" />
+					</tabpanel>
+				</tabpanels>
+			</tabbox>
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,137 @@
+package com.mantabs.entity.master;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "MMF_MST_CABANG")
+public class Cabang {
+
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@Column(name = "ID_CABANG")
+	private String idCabang;
+	
+	@Column(name = "NAMA_CABANG")
+	private String namaCabang;
+	
+	@Column(name = "KELAS_CABANG")
+	private String kelasCabang;
+	
+	@Column(name = "ALAMAT")
+	private String alamat;
+	
+	@Column(name = "RT")
+	private String rt;
+	
+	@Column(name = "RW")
+	private String rw;
+	
+	@Column(name = "KODE_AREA_TELP1")
+	private String kodeAreaTelp1;
+	
+	@Column(name = "NO_TELP1")
+	private String noTelp1;
+	
+	@Column(name = "KODE_AREA_TELP2")
+	private String kodeAreaTelp2;
+	
+	@Column(name = "NO_TELP2")
+	private String noTelp2;
+	
+	@Column(name = "KODE_AREA_TELP3")
+	private String kodeAreaTelp3;
+	
+	@Column(name = "NO_TELP3")
+	private String noTelp3;
+	
+	@Column(name = "KODE_AREA_FAX")
+	private String kodeAreaFax;
+	
+	@Column(name = "NO_FAX")
+	private String noFax;
+	
+	@Column(name = "NO_HP")
+	private String noHp;
+	
+	@Column(name = "PLAFON_PETTY_CASH")
+	private BigDecimal plafonPettyCash;
+	
+	@Column(name = "BATAS_MAX_PETTY_CASH")
+	private BigDecimal batasMaxPettyCash;
+	
+	@Column(name = "SISA_PETTY_CASH")
+	private BigDecimal sisaPettyCash;
+	
+	@Column(name = "NILAI_KPM")
+	private BigDecimal nilaiKpm;
+	
+	@Column(name = "NO_COA")
+	private String noCoa;
+	
+	@Column(name = "WAKTU_LOCAL")
+	private String waktuLocal;
+	
+	@Column(name = "STATUS")
+	private Integer status;
+	
+	@Column(name = "CREATED_DT")
+	private Date createdDt;
+	
+	@Column(name = "CREATED_BY")
+	private String createdBy;
+	
+	@Column(name = "MODIFIED_DT")
+	private Date modifiedDt;
+	
+	@Column(name = "MODIFIED_BY")
+	private String modifiedBy;
+	
+	@Column(name = "END_DT")
+	private Date endDt;
+	
+	@Column(name = "ID_KATEGORI_PRODUK")
+	private String idKategoriProduk;
+	
+	@Column(name = "ID_PORTOFOLIO")
+	private String idPortofolio;
+	
+	@Column(name = "ID_PROVINSI")
+	private String idProvinsi;
+	
+	@Column(name = "ID_KOTA")
+	private String idKota;
+	
+	@Column(name = "ID_KECAMATAN")
+	private String idKecamatan;
+	
+	@Column(name = "ID_KELURAHAN")
+	private String idKelurahan;
+	
+	@Column(name = "ID_REGIONAL")
+	private String idRegional;
+	
+	@Column(name = "ID_CENTRO")
+	private String idCentro;
+	
+	@Column(name = "ID_WILAYAH")
+	private String idWilayah;
+	
+	@Column(name = "MASA_REQUEST")
+	private Integer masaRequest;
+	
+	@Column(name = "BUFFER_CASH")
+	private BigDecimal bufferCash;
+	
+	@Column(name = "ID_CENTRO")
+	private String idCentro;
+	
+	
+
+}

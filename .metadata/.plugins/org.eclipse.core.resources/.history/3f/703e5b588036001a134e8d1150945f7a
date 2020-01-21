@@ -1,0 +1,366 @@
+<zk xmlns:x="xhtml">
+
+	<style>
+		.GridLayoutNoBorder tr.z-row td.z-row-inner, tr.z-row .zcell,
+		div.zgrid, .z-grid { border: none; overflow: hidden; zoom: 1;
+		background: white; border-top: none; border-left: none;
+		border-right: none; border-bottom:none; } .windowStyle
+		.z-window-embedded-cnt, .z-window-embedded-body,
+		.z-window-overlapped-body, .z-window-popup-body,
+		.z-window-highlighted-body, .z-window-modal-body{ overflow:auto;
+		} .windowStyle .z-window-embedded-cnt, .z-window-embedded-body,
+		.z-window-overlapped-body, .z-window-popup-body,
+		.z-window-highlighted-body, .z-window-modal-body{ overflow:auto;
+		}
+
+
+	</style>
+
+	<window apply="org.zkoss.bind.BindComposer" sclass="content-window"
+		border="normal" contentStyle="overflow:auto;"
+		viewModel="@id('vm') @init('com.mantabs.collection.master.area_assignment.viewmodel.LjpVM')">
+
+		<div height="100%">
+			<div visible="@load(vm.lpj)" style="overflow:hidden;">
+
+				<vlayout width="1011px">
+					<grid
+						style="margin-top: 10px; margin-bottom:10px; overflow:hidden;"
+						sclass="GridLayoutNoBorder">
+						<columns>
+							<column width="150px" />
+							<column width="300px" />
+							<column width="150px" />
+							<column width="300px" />
+						</columns>
+						<rows>
+							<row style="border-bottom:transparent">
+								<label value="HO" />
+								<combobox width="225px" value="" />
+								<label value="Kategori Biaya" />
+								<combobox width="225px" value="" />
+
+							</row>
+							<row style="border-bottom:transparent">
+								<label value="Wilayah" />
+								<combobox width="225px" value="" />
+								<label value="Sub Kategori" />
+								<combobox width="225px" value="" />
+
+							</row>
+							<row style="border-bottom:transparent">
+								<label value="Regional " />
+								<combobox width="225px" value="" />
+								<label value="Jenis Biaya" />
+								<combobox width="225px" value="" />
+
+							</row>
+							<row style="border-bottom:transparent">
+								<label value="Centro" />
+								<combobox width="225px" value="" />
+								<label value="Tanggal Pengajuan" />
+								<datebox width="225px" />
+
+							</row>
+							<row style="border-bottom:transparent">
+								<label value="Cabang" />
+								<combobox width="225px" value="" />
+								<label value="Status Pengajuan" />
+								<combobox width="225px" value="" />
+
+							</row>
+
+						</rows>
+					</grid>
+					<separator spacing="10px" />
+
+					<grid sclass="GridLayoutNoBorder">
+						<columns>
+							<column width="150px" />
+							<column width="300px" />
+							<column width="150px" />
+							<column width="300px" />
+						</columns>
+						<rows>
+							<row style="border-bottom:transparent">
+								<label />
+								<label />
+								<button iconSclass="z-icon-filter"
+									onClick="@command('filter')" autodisable="self" />
+
+							</row>
+
+						</rows>
+					</grid>
+
+					<groupbox height="380px">
+						<caption label="Hasil Pencarian Data Applikasi" />
+
+						<button iconSclass="z-icon-plus"
+							onClick="@command('addLpj')" />
+
+						<separator style="height:10px !important" />
+
+						<listbox mold="paging" pageSize="15"
+							pagingPosition="bottom">
+							<listhead>
+								<listheader align="center"
+									sort="auto(kodeKategoriBiaya)">
+									No Pengajuan
+								</listheader>
+								<listheader align="center"
+									sort="auto(kategoriBiaya)">
+									Jenis Biaya
+								</listheader>
+								<listheader align="center"
+									sort="auto(kategoriBiaya)">
+									Nilai Pengajuan
+								</listheader>
+								<listheader align="center"
+									sort="auto(kategoriBiaya)">
+									Realisasi
+								</listheader>
+								<listheader align="center"
+									sort="auto(kategoriBiaya)">
+									Selisih (+/-)
+								</listheader>
+								<listheader align="center"
+									sort="auto(kategoriBiaya)">
+									Cara Pembayaran
+								</listheader>
+								<listheader align="center"
+									sort="auto(kategoriBiaya)">
+									Status Kasir
+								</listheader>
+
+								<listheader align="center">
+									Aksi
+								</listheader>
+
+							</listhead>
+
+							<listitem>
+								<listcell label="" />
+								<listcell label="" />
+								<listcell label="" />
+								<listcell label="" />
+								<listcell label="" />
+								<listcell label="" />
+								<listcell label="" />
+								<listcell>
+									<button iconSclass="z-icon-edit"
+										onClick="@command('')" autodisable="self" />
+									<button iconSclass="z-icon-trash"
+										onClick="@command('') " autodisable="self" />
+								</listcell>
+							</listitem>
+						</listbox>
+
+					</groupbox>
+
+
+
+				</vlayout>
+
+			</div>
+
+			<div width="70%" height="565px"
+				visible="@load(vm.detailLpj)" id="groupApproval"
+				style="-webkit-box-shadow: 1px 1px 10px 3px #969696; padding-top:10px; padding-left: 10px;
+			box-shadow: 1px 1px 10px 3px #969696 ; margin-left: 75px; overflow-y:scroll;">
+
+				<separator spacing="5px"></separator>
+
+				<label style="font-weight: bold; font-size:15px"
+					value="LPJ >> Tambah">
+				</label>
+
+				<separator
+					style="height: 1px !important; margin-right: 10px" bar="true">
+				</separator>
+
+
+				<div style="overflow-y:scroll;">
+					<grid sclass="GridLayoutNoBorder">
+						<columns>
+							<column width="150px" />
+							<column width="300px" />
+							<column width="150px" />
+							<column width="300px" />
+						</columns>
+						<rows>
+							<row>
+								<label value="HO" />
+								<combobox width="220px" value=""
+									readonly="true" />
+								<label value="No Pengajuan" />
+								<textbox width="220px" value=""
+									readonly="true" />
+							</row>
+							<row>
+								<label value="Wilayah" />
+								<combobox width="220px" value=""
+									readonly="true" />
+								<label value="Tanggal Pengajuan" />
+								<datebox width="220px" readonly="true" />
+							</row>
+							<row>
+								<label value="Regional" />
+								<combobox width="220px" readonly="true" />
+								<label value="Kategori Biaya" />
+								<combobox width="220px" readonly="true" />
+							</row>
+							<row>
+								<label value="Centro" />
+								<combobox width="220px" readonly="true" />
+								<label value="Type Pengajuan" />
+								<combobox width="220px" readonly="true" />
+							</row>
+
+							<row>
+								<label value="Cabang" />
+								<combobox readonly="true" width="220px" />
+							</row>
+
+						</rows>
+					</grid>
+
+					<separator
+						style="height: 1px !important; margin-right: 10px" bar="true">
+					</separator>
+
+					<grid sclass="GridLayoutNoBorder">
+						<columns>
+							<column width="150px" />
+							<column width="300px" />
+							<column width="150px" />
+							<column width="300px" />
+						</columns>
+						<rows>
+							<row>
+								<label value="Sub Kategori" />
+								<combobox width="220px" value=""
+									readonly="true" />
+								<label value="Budget" />
+								<textbox width="220px" value=""
+									readonly="true" />
+							</row>
+							<row>
+								<label value="Jenis Biaya" />
+								<combobox width="220px" value=""
+									readonly="true" />
+								<label value="Sisa Budget" />
+								<textbox width="220px" readonly="true" />
+							</row>
+							<row>
+								<label value="Nilai Pengajuan" />
+								<textbox width="220px" readonly="true" />
+								<label value="Jenis Budget" />
+								<combobox width="220px" readonly="true" />
+							</row>
+							<row>
+								<label value="Keterangan" />
+								<textbox width="220px" rows="5"
+									readonly="true" />
+							</row>
+
+							<row>
+								<label value="Approval" />
+								<combobox readonly="true" width="220px" />
+							</row>
+
+						</rows>
+					</grid>
+
+					<space height="20px" width="100%"
+						style=" margin-right: 5px; background-color:grey; margin-top:10px; margin-bottom:10px"
+						bar="true">
+					</space>
+
+					<grid sclass="GridLayoutNoBorder">
+						<columns>
+							<column width="62px" />
+							<column width="300px" />
+						</columns>
+						<rows>
+							<row>
+								<label value="Tanggal Realisasi" />
+								<datebox width="220px" readonly="true" />
+							</row>
+							<row>
+								<label value="Realisasi" />
+								<textbox width="220px" value="" />
+							</row>
+							<row>
+								<label value="Selisih (+/-)" />
+								<textbox width="220px" readonly="true" />
+							</row>
+
+						</rows>
+					</grid>
+
+					<groupbox height="auto">
+						<caption label="Upload Dokumen" />
+
+						<separator style="height:10px !important" />
+
+						<listbox mold="paging" pageSize="15"
+							pagingPosition="bottom">
+							<listhead>
+								<listheader align="center"
+									sort="auto(kodeKategoriBiaya)">
+									Dokumen
+								</listheader>
+								<listheader align="center"
+									sort="auto(kategoriBiaya)">
+									Mandatory
+								</listheader>
+								<listheader align="center"
+									sort="auto(kategoriBiaya)">
+									Tanggal Unggah
+								</listheader>
+								<listheader align="center"
+									sort="auto(kategoriBiaya)">
+									Nama File
+								</listheader>
+
+								<listheader align="center">
+									Aksi
+								</listheader>
+
+							</listhead>
+
+							<listitem>
+								<listcell label="" />
+								<listcell label="" />
+								<listcell label="" />
+								<listcell label="" />
+								<listcell>
+									<button iconSclass="z-icon-upload"
+										onClick="@command('')" autodisable="self" />
+									<button iconSclass="z-icon-edit"
+										onClick="@command('')" autodisable="self" />
+									<button iconSclass="z-icon-trash"
+										onClick="@command('') " autodisable="self" />
+								</listcell>
+							</listitem>
+						</listbox>
+
+					</groupbox>
+
+
+					<hbox style="margin-top:5px; margin-bottom:5px">
+						<button iconSclass="z-icon-save"
+							onClick="@command('saveLpj')" autodisable="self" />
+						<button iconSclass="z-icon-undo"
+							onClick="@command('batalLpj')" autodisable="self" />
+					</hbox>
+
+
+				</div>
+
+
+			</div>
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,10 @@
+package com.mantabs.entity.master;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="MMF_MST_WILAYAH")
+public class Wilayah {
+
+}
